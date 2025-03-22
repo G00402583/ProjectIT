@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitFusion - Contact</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- REPLACED NAVBAR WITH NEW "cool-header" -->
+  <header class="cool-header">
+    <div class="header-left">
+      <a href="index.html" class="brand-link">
+        <img src="logo71.gif" alt="FitFusion Logo" />
+      </a>
+    </div>
+
+    <nav class="header-nav">
+      <!-- If you’d like “Home” to be highlighted when on this page, keep class="nav-item active" -->
+      <a href="shop.html" class="nav-item">Shop</a>
+      <a href="cart.html" class="nav-item">Cart</a>
+      <a href="courses.html" class="nav-item">Courses</a>
+      <!-- Use the "highlight" class on whichever link you want to stand out (e.g., “Contact”). -->
+      <a href="contact.html" class="nav-item highlight">Contact</a>
+    </nav>
+  </header>
+  <!-- CONTACT CONTAINER -->
+  <div class="contact-container">
+    <h1>Contact Us</h1>
+    <p>Have a question or comment? Send us a message below!</p>
+
+    <form action="#" method="POST" class="contact-form">
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          placeholder="Enter your full name" 
+          required
+        />
+      </div>
+
+      <!-- Email Address -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          required
+        />
+      </div>
+
+      <!-- Message -->
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea 
+          id="message" 
+          name="message" 
+          rows="5" 
+          placeholder="Your message here..." 
+          required
+        ></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 FitFusion. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
