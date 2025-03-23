@@ -41,15 +41,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  /* Reinstated the black->purple->blue fade on the header bar itself */
   background-image: linear-gradient(
     to right,
     #000 40%, 
     var(--ff-purple) 60%, 
     var(--ff-blue) 100%
   );
-
   padding: 1rem 2rem;
 }
 
@@ -106,7 +103,7 @@ body {
    2) HERO SECTION (Home)
    ========================= */
 .hero-home {
-  background: url("img3.jpg") center center no-repeat;
+  background: url("images/img3.jpg") center center no-repeat;
   background-size: cover;
   background-attachment: fixed; 
   min-height: 70vh; 
@@ -441,4 +438,131 @@ footer p {
 .btn-cta:hover {
   background: var(--ff-blue);
   transform: scale(1.05);
+}
+
+/* ==============================
+   8) WIZARD / MULTI-STEP STYLES
+   ============================== */
+
+/* Center the entire wizard container and its content */
+.wizard-container {
+  max-width: 900px;       
+  margin: 2rem auto;      
+  text-align: center;     
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 2rem 1rem;
+  color: #fff;  /* White text for high contrast */
+}
+
+/* Hide step sections by default; show only the active step */
+.step-section {
+  display: none;
+  margin-bottom: 2rem;
+}
+.step-section.active {
+  display: block;
+}
+
+/* Headings in each step */
+.step-section h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+/* Normal card-grid styling (flex layout) */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem auto;
+}
+
+/* Override for STEP 1 (force 4 columns so 50+ doesn't wrap) */
+#step1 .card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 220px); /* 4 fixed columns, each 220px */
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem auto;
+}
+
+/* Individual card */
+.card {
+  background: #222;      
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 220px;  
+  margin: 0;     
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0.5rem 0;
+}
+
+/* Selected card highlight */
+.selected {
+  outline: 3px solid limegreen;
+}
+
+/* Buttons container (Next, Back) */
+.btn-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* We'll reuse your existing .btn style, but override hover color here if you like */
+.btn:hover {
+  background-color: #666;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Final recommendation box */
+.recommendation {
+  background: #222;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+.recommendation h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #fff;
+}
+.recommendation p {
+  color: #ccc;
+  line-height: 1.5;
+}
+
+/* Minimal wizard header */
+.wizard-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.wizard-logo {
+  height: 60px;
+  width: auto;
 }

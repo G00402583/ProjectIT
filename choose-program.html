@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choose Your Program | FitFusion</title>
+  <!-- Link to your existing site-wide CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Minimal Header with Logo -->
+  <header class="wizard-header">
+    <a href="index.html">
+      <img src="logo71.gif" alt="FitFusion Logo" class="wizard-logo" />
+    </a>
+  </header>
+
+  <!-- Wizard Container -->
+  <div class="wizard-container">
+    <h1>Select Your Program</h1>
+
+    <!-- STEP 1: Age Range -->
+    <section id="step1" class="step-section active">
+      <h2>Step 1: Choose Your Age Range</h2>
+      <div class="card-grid">
+        <div class="card" data-age="18-29">
+          <img src="images/18-29.jpg" alt="Age 18-29">
+          <h3 class="card-title"></h3>
+        </div>
+        <div class="card" data-age="30-39">
+          <img src="images/30-39.jpg" alt="Age 30-39">
+          <h3 class="card-title"></h3>
+        </div>
+        <div class="card" data-age="40-49">
+          <img src="images/40-49.jpg" alt="Age 40-49">
+          <h3 class="card-title"></h3>
+        </div>
+        <div class="card" data-age="50+">
+          <img src="images/50+.jpg" alt="Age 50+">
+          <h3 class="card-title"></h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnNext1" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: Body Type -->
+    <section id="step2" class="step-section">
+      <h2>Step 2: Choose Your Body Type</h2>
+      <div class="card-grid">
+        <div class="card" data-body="slim">
+          <img src="images/slim.jpg" alt="Slim">
+          <h3 class="card-title">Slim</h3>
+        </div>
+        <div class="card" data-body="average">
+          <img src="images/average.jpg" alt="Average">
+          <h3 class="card-title">Average</h3>
+        </div>
+        <div class="card" data-body="heavy">
+          <img src="images/heavy.jpg" alt="Heavy">
+          <h3 class="card-title">Heavy</h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack1">Back</button>
+        <button class="btn" id="btnNext2" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 3: Gender -->
+    <section id="step3" class="step-section">
+      <h2>Step 3: Choose Your Gender</h2>
+      <div class="card-grid">
+        <div class="card" data-gender="male">
+          <img src="images/male.jpg" alt="Male">
+          <h3 class="card-title">Male</h3>
+        </div>
+        <div class="card" data-gender="female">
+          <img src="images/female.jpg" alt="Female">
+          <h3 class="card-title">Female</h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack2">Back</button>
+        <button class="btn" id="btnNext3" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 4: Primary Goal -->
+    <section id="step4" class="step-section">
+      <h2>Step 4: What's Your Primary Goal?</h2>
+      <div class="card-grid">
+        <div class="card" data-goal="weight-loss">
+          <img src="images/weightloss.jpg" alt="Weight Loss">
+          <h3 class="card-title">Weight Loss</h3>
+        </div>
+        <div class="card" data-goal="muscle-gain">
+          <img src="images/musclegain.jpg" alt="Muscle Gain">
+          <h3 class="card-title">Muscle Gain</h3>
+        </div>
+        <div class="card" data-goal="toning">
+          <img src="images/toneup.jpg" alt="Tone Up">
+          <h3 class="card-title">Tone Up</h3>
+        </div>
+        <div class="card" data-goal="health">
+          <img src="images/health.jpg" alt="Health">
+          <h3 class="card-title">Improve Health</h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack3">Back</button>
+        <button class="btn" id="btnNext4" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 5: Fitness Level -->
+    <section id="step5" class="step-section">
+      <h2>Step 5: What's Your Fitness Level?</h2>
+      <div class="card-grid">
+        <div class="card" data-fitness="beginner">
+          <img src="images/beginner.jpg" alt="Beginner">
+          <h3 class="card-title">Beginner</h3>
+        </div>
+        <div class="card" data-fitness="intermediate">
+          <img src="images/intermediate.jpg" alt="Intermediate">
+          <h3 class="card-title">Intermediate</h3>
+        </div>
+        <div class="card" data-fitness="advanced">
+          <img src="images/advanced.jpg" alt="Advanced">
+          <h3 class="card-title">Advanced</h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack4">Back</button>
+        <button class="btn" id="btnNext5" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 6: Injuries or Limitations -->
+    <section id="step6" class="step-section">
+      <h2>Step 6: Any Injuries or Limitations?</h2>
+      <div class="card-grid">
+        <div class="card" data-injury="none">
+          <h3 class="card-title">None</h3>
+        </div>
+        <div class="card" data-injury="minor">
+          <h3 class="card-title">Minor Injuries</h3>
+        </div>
+        <div class="card" data-injury="major">
+          <h3 class="card-title">Major or Chronic</h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack5">Back</button>
+        <button class="btn" id="btnNext6" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 7: Preferred Workout Location -->
+    <section id="step7" class="step-section">
+      <h2>Step 7: Preferred Workout Location</h2>
+      <div class="card-grid">
+        <div class="card" data-location="gym">
+          <img src="images/gymw.jpg" alt="Gym">
+          <h3 class="card-title">Gym</h3>
+        </div>
+        <div class="card" data-location="home">
+          <img src="images/home.jpg" alt="Home">
+          <h3 class="card-title">Home</h3>
+        </div>
+        <div class="card" data-location="outdoors">
+          <img src="images/outdoor.jpg" alt="Outdoors">
+          <h3 class="card-title">Outdoors</h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack6">Back</button>
+        <button class="btn" id="btnNext7" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 8: Time Commitment -->
+    <section id="step8" class="step-section">
+      <h2>Step 8: Time Commitment</h2>
+      <div class="card-grid">
+        <div class="card" data-time="30min">
+          <h3 class="card-title">30 min/day</h3>
+        </div>
+        <div class="card" data-time="1hour">
+          <h3 class="card-title">1 hour/day</h3>
+        </div>
+        <div class="card" data-time="2hours">
+          <h3 class="card-title">2 hours/day</h3>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack7">Back</button>
+        <button class="btn" id="btnNext8" disabled>See Recommendation</button>
+      </div>
+    </section>
+
+    <!-- FINAL STEP (STEP 9): Recommendation -->
+    <section id="step9" class="step-section">
+      <h2>We recommend:</h2>
+      <div class="recommendation" id="recommendationBox">
+        <!-- Filled by JS -->
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="btnBack8">Back</button>
+      </div>
+    </section>
+
+  </div> <!-- End .wizard-container -->
+
+  <!-- =========================
+       JS WIZARD LOGIC
+  ========================== -->
+  <script>
+    // Variables for user choices
+    let selectedAge    = null;
+    let selectedBody   = null;
+    let selectedGender = null;
+    let selectedGoal   = null;
+    let selectedFitness = null;
+    let selectedInjury  = null;
+    let selectedLocation = null;
+    let selectedTime     = null;
+
+    // Step sections
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+    const step4 = document.getElementById("step4");
+    const step5 = document.getElementById("step5");
+    const step6 = document.getElementById("step6");
+    const step7 = document.getElementById("step7");
+    const step8 = document.getElementById("step8");
+    const step9 = document.getElementById("step9");
+
+    // Buttons (Next / Back)
+    const btnNext1 = document.getElementById("btnNext1");
+    const btnNext2 = document.getElementById("btnNext2");
+    const btnNext3 = document.getElementById("btnNext3");
+    const btnNext4 = document.getElementById("btnNext4");
+    const btnNext5 = document.getElementById("btnNext5");
+    const btnNext6 = document.getElementById("btnNext6");
+    const btnNext7 = document.getElementById("btnNext7");
+    const btnNext8 = document.getElementById("btnNext8");
+
+    const btnBack1 = document.getElementById("btnBack1");
+    const btnBack2 = document.getElementById("btnBack2");
+    const btnBack3 = document.getElementById("btnBack3");
+    const btnBack4 = document.getElementById("btnBack4");
+    const btnBack5 = document.getElementById("btnBack5");
+    const btnBack6 = document.getElementById("btnBack6");
+    const btnBack7 = document.getElementById("btnBack7");
+    const btnBack8 = document.getElementById("btnBack8");
+
+    // Recommendation box
+    const recommendationBox = document.getElementById("recommendationBox");
+
+    // === STEP 1: Age selection
+    step1.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step1.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedAge = card.getAttribute("data-age");
+        btnNext1.disabled = false;
+      });
+    });
+    btnNext1.addEventListener("click", () => {
+      step1.classList.remove("active");
+      step2.classList.add("active");
+    });
+
+    // === STEP 2: Body type
+    step2.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step2.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedBody = card.getAttribute("data-body");
+        btnNext2.disabled = false;
+      });
+    });
+    btnNext2.addEventListener("click", () => {
+      step2.classList.remove("active");
+      step3.classList.add("active");
+    });
+    btnBack1.addEventListener("click", () => {
+      step2.classList.remove("active");
+      step1.classList.add("active");
+    });
+
+    // === STEP 3: Gender
+    step3.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step3.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedGender = card.getAttribute("data-gender");
+        btnNext3.disabled = false;
+      });
+    });
+    btnNext3.addEventListener("click", () => {
+      step3.classList.remove("active");
+      step4.classList.add("active");
+    });
+    btnBack2.addEventListener("click", () => {
+      step3.classList.remove("active");
+      step2.classList.add("active");
+    });
+
+    // === STEP 4: Primary Goal
+    step4.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step4.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedGoal = card.getAttribute("data-goal");
+        btnNext4.disabled = false;
+      });
+    });
+    btnNext4.addEventListener("click", () => {
+      step4.classList.remove("active");
+      step5.classList.add("active");
+    });
+    btnBack3.addEventListener("click", () => {
+      step4.classList.remove("active");
+      step3.classList.add("active");
+    });
+
+    // === STEP 5: Fitness Level
+    step5.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step5.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedFitness = card.getAttribute("data-fitness");
+        btnNext5.disabled = false;
+      });
+    });
+    btnNext5.addEventListener("click", () => {
+      step5.classList.remove("active");
+      step6.classList.add("active");
+    });
+    btnBack4.addEventListener("click", () => {
+      step5.classList.remove("active");
+      step4.classList.add("active");
+    });
+
+    // === STEP 6: Injury
+    step6.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step6.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedInjury = card.getAttribute("data-injury");
+        btnNext6.disabled = false;
+      });
+    });
+    btnNext6.addEventListener("click", () => {
+      step6.classList.remove("active");
+      step7.classList.add("active");
+    });
+    btnBack5.addEventListener("click", () => {
+      step6.classList.remove("active");
+      step5.classList.add("active");
+    });
+
+    // === STEP 7: Location
+    step7.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step7.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedLocation = card.getAttribute("data-location");
+        btnNext7.disabled = false;
+      });
+    });
+    btnNext7.addEventListener("click", () => {
+      step7.classList.remove("active");
+      step8.classList.add("active");
+    });
+    btnBack6.addEventListener("click", () => {
+      step7.classList.remove("active");
+      step6.classList.add("active");
+    });
+
+    // === STEP 8: Time Commitment
+    step8.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        step8.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedTime = card.getAttribute("data-time");
+        btnNext8.disabled = false;
+      });
+    });
+    btnNext8.addEventListener("click", () => {
+      step8.classList.remove("active");
+      step9.classList.add("active");
+      recommendationBox.innerHTML = getRecommendation();
+    });
+    btnBack7.addEventListener("click", () => {
+      step8.classList.remove("active");
+      step7.classList.add("active");
+    });
+
+    // === FINAL STEP (STEP 9)
+    btnBack8.addEventListener("click", () => {
+      step9.classList.remove("active");
+      step8.classList.add("active");
+    });
+
+    // ================================
+    // Simple Recommendation Function
+    // ================================
+    function getRecommendation() {
+      // Basic logic — customize as needed:
+      return `
+        <h3>Hello, ${selectedGender || 'friend'}!</h3>
+        <p>A Balanced Fitness and Nutrition Program is perfect for your 
+        <strong>${selectedAge}</strong> age range,
+        <strong>${selectedBody}</strong> body type,
+        with a goal of <strong>${selectedGoal}</strong>.<br>
+        Since you're <strong>${selectedFitness}</strong>,
+        working out in a <strong>${selectedLocation}</strong> setting, and have
+        <strong>${selectedInjury === 'none' ? 'no injuries' : selectedInjury + ' injuries'}</strong>,
+        we recommend dedicating <strong>${selectedTime}</strong> to your daily routine.</p>
+
+        <p><strong>Tip:</strong> Check out our 
+        <a href="#">Nutrition E-book</a> and 
+        <a href="#">Workout Plan</a> for more details!</p>
+      `;
+    }
+  </script>
+</body>
+</html>
