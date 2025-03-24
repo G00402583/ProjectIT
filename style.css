@@ -566,3 +566,45 @@ footer p {
   height: 60px;
   width: auto;
 }
+
+/* ==============================
+   "Bubble" effect for 
+   the Choose Program Button
+   ============================== */
+.choose-program-btn {
+  position: relative; 
+  background: var(--ff-purple);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 50px; /* round bubble-like shape */
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: inline-block; /* ensure it behaves like a normal button/link */
+  margin-top: 1rem;      /* adjust if needed */
+}
+
+.choose-program-btn::before {
+  content: "";
+  position: absolute;
+  top: -10px; 
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50px;
+  /* Subtle radial glow that matches your color scheme: 
+     var(--ff-purple) -> var(--ff-blue) with some alpha for fade */
+  background: radial-gradient(
+    circle, 
+    rgba(123, 76, 240, 0.25) 0%,   /* lighter purple-ish at center */
+    rgba(76, 180, 240, 0.15) 60%, /* transition to lighter blue-ish */
+    rgba(76, 180, 240, 0) 100%
+  );
+  z-index: -1; 
+}
+
+.choose-program-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(123, 76, 240, 0.5);
+}
