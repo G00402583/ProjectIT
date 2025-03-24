@@ -1,6 +1,6 @@
 /* =============================
    FitFusion Final Styles
-   "Cool-Header" + Rest of Site
+   "Header" + Rest of Site
    ============================= */
 
 /* --- RESET & FONT --- */
@@ -35,7 +35,7 @@ body {
 }
 
 /* =========================
-   1) COOL HEADER STYLES
+   1)  HEADER STYLES
    ========================= */
 .cool-header {
   display: flex;
@@ -528,7 +528,7 @@ footer p {
   margin-bottom: 2rem;
 }
 
-/* We'll reuse your existing .btn style, but override hover color here if you like */
+
 .btn:hover {
   background-color: #666;
 }
@@ -568,7 +568,7 @@ footer p {
 }
 
 /* ==============================
-   "Bubble" effect for 
+  Effect for 
    the Choose Program Button
    ============================== */
 .choose-program-btn {
@@ -582,7 +582,7 @@ footer p {
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
   display: inline-block; /* ensure it behaves like a normal button/link */
-  margin-top: 1rem;      /* adjust if needed */
+  margin-top: 1rem;      
 }
 
 .choose-program-btn::before {
