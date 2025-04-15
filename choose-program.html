@@ -213,11 +213,32 @@
 
   </div> <!-- End .wizard-container -->
 
+  <!-- ======================
+       Supabase SDK
+  ====================== -->
+  <!-- Include the UMD build of Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+
   <!-- =========================
        JS WIZARD LOGIC
   ========================== -->
   <script>
-    // Variables for user choices
+    /*****************************************
+     1. Supabase Configuration
+    *****************************************/
+    // Replace with your actual Supabase values
+    const SUPABASE_URL = "https://kqzevnsdurpptiaxszqq.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxemV2bnNkdXJwcHRpYXhzenFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjA4NDYsImV4cCI6MjA1OTU5Njg0Nn0.eM-M08VulR5HiwKs-t7y2xehqUwBJPW0dnKENxMvArg";
+
+    // Create the Supabase client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Name of your table in Supabase
+    const TABLE_NAME = "program_choices";
+
+    /*****************************************
+     2. Wizard Variables
+    *****************************************/
     let selectedAge    = null;
     let selectedBody   = null;
     let selectedGender = null;
@@ -225,7 +246,7 @@
     let selectedFitness = null;
     let selectedInjury  = null;
     let selectedLocation = null;
-    let selectedTime     = null;
+    let selectedTime    = null;
 
     // Step sections
     const step1 = document.getElementById("step1");
@@ -238,7 +259,7 @@
     const step8 = document.getElementById("step8");
     const step9 = document.getElementById("step9");
 
-    // Buttons (Next / Back)
+    // Buttons
     const btnNext1 = document.getElementById("btnNext1");
     const btnNext2 = document.getElementById("btnNext2");
     const btnNext3 = document.getElementById("btnNext3");
@@ -260,6 +281,9 @@
     // Recommendation box
     const recommendationBox = document.getElementById("recommendationBox");
 
+    /*****************************************
+     3. Wizard Step Event Listeners
+    *****************************************/
     // === STEP 1: Age selection
     step1.querySelectorAll(".card").forEach(card => {
       card.addEventListener("click", () => {
@@ -391,10 +415,15 @@
         btnNext8.disabled = false;
       });
     });
-    btnNext8.addEventListener("click", () => {
+    btnNext8.addEventListener("click", async () => {
       step8.classList.remove("active");
       step9.classList.add("active");
+
+      // Show the recommendation
       recommendationBox.innerHTML = getRecommendation();
+
+      // Then save to Supabase
+      await saveToSupabase();
     });
     btnBack7.addEventListener("click", () => {
       step8.classList.remove("active");
@@ -407,11 +436,38 @@
       step8.classList.add("active");
     });
 
-    // ================================
-    // Simple Recommendation Function
-    // ================================
+    /*****************************************
+     4. Save to Supabase
+    *****************************************/
+    async function saveToSupabase() {
+      const payload = {
+        age: selectedAge,
+        body_type: selectedBody,
+        gender: selectedGender,
+        goal: selectedGoal,
+        fitness_level: selectedFitness,
+        injury_status: selectedInjury,
+        workout_loc: selectedLocation,
+        time_commit: selectedTime,
+        created_at: new Date().toISOString()
+      };
+
+      // Insert into your table
+      const { data, error } = await supabase
+        .from(TABLE_NAME)
+        .insert([ payload ]);
+
+      if (error) {
+        console.error("Error inserting data:", error.message);
+      } else {
+        console.log("Data successfully inserted:", data);
+      }
+    }
+
+    /*****************************************
+     5. Recommendation Logic
+    *****************************************/
     function getRecommendation() {
-      // Basic logic — customize as needed:
       return `
         <h3>Hello, ${selectedGender || 'friend'}!</h3>
         <p>A Balanced Fitness and Nutrition Program is perfect for your 
