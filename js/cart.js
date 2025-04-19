@@ -124,7 +124,7 @@ checkoutBtn.addEventListener('click', async e => {
     });
   
     // ✅ Send token for authorization to Supabase edge function
-    const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/smart-responder', {
+    const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
