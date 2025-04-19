@@ -55,7 +55,6 @@ async function renderCart() {
   }).join('');
 
   cartTotal.textContent = '€ ' + total.toFixed(2);
-
   attachHandlers();
 }
 
@@ -96,6 +95,7 @@ checkoutBtn.addEventListener('click', async e => {
 
   const { data: { session } } = await sb.auth.getSession();
   if (!session) return window.location.replace("login.html");
+
   const uid = session.user.id;
   const email = session.user.email;
 
@@ -113,12 +113,12 @@ checkoutBtn.addEventListener('click', async e => {
   const line_items = cartItems.map(ci => {
     const p = products.find(pr => pr.id === ci.product_id);
     return {
+      quantity: ci.qty,
       price_data: {
-        currency: 'eur',
+        currency: "eur",
         product_data: { name: p.name },
-        unit_amount: p.price_cents,
-      },
-      quantity: ci.qty
+        unit_amount: p.price_cents
+      }
     };
   });
 
@@ -128,8 +128,13 @@ checkoutBtn.addEventListener('click', async e => {
     body: JSON.stringify({ line_items, email })
   });
 
-  const { url } = await res.json();
-  window.location.href = url;
+  const result = await res.json();
+  if (result.url) {
+    window.location.href = result.url;
+  } else {
+    alert('Something went wrong with checkout!');
+    console.error(result);
+  }
 });
 
 renderCart();
