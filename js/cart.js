@@ -123,23 +123,27 @@ checkoutBtn.addEventListener('click', async e => {
       };
     });
   
-    // ✅ Send token for authorization to Supabase edge function
-    const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ line_items, email })
-    });
+    try {
+      const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ line_items, email })
+      });
   
-    const data = await res.json();
+      const data = await res.json();
   
-    if (res.ok && data.url) {
-      window.location.href = data.url;
-    } else {
-      console.error("❌ Checkout failed:", data);
-      alert("Checkout failed. Please try again.");
+      if (res.ok && data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("❌ Checkout failed:", data);
+        alert("Checkout failed. Please try again.");
+      }
+    } catch (err) {
+      console.error("❌ Error sending to Stripe:", err);
+      alert("Something went wrong. Please try again.");
     }
   });
   
