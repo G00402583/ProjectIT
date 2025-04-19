@@ -91,50 +91,57 @@ logoutLink.addEventListener('click', async e => {
 });
 
 checkoutBtn.addEventListener('click', async e => {
-  e.preventDefault();
-
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) return window.location.replace("login.html");
-
-  const uid = session.user.id;
-  const email = session.user.email;
-
-  const { data: cartItems } = await sb
-    .from('cart_items')
-    .select('qty, product_id')
-    .eq('cart_id', uid);
-
-  const productIds = cartItems.map(ci => ci.product_id);
-  const { data: products } = await sb
-    .from('products')
-    .select('id, name, price_cents')
-    .in('id', productIds);
-
-  const line_items = cartItems.map(ci => {
-    const p = products.find(pr => pr.id === ci.product_id);
-    return {
-      quantity: ci.qty,
-      price_data: {
-        currency: "eur",
-        product_data: { name: p.name },
-        unit_amount: p.price_cents
-      }
-    };
+    e.preventDefault();
+  
+    const { data: { session }, error } = await sb.auth.getSession();
+    if (!session) return window.location.replace("login.html");
+  
+    const uid = session.user.id;
+    const email = session.user.email;
+    const token = session.access_token;
+  
+    const { data: cartItems } = await sb
+      .from('cart_items')
+      .select('qty, product_id')
+      .eq('cart_id', uid);
+  
+    const productIds = cartItems.map(ci => ci.product_id);
+    const { data: products } = await sb
+      .from('products')
+      .select('id, name, price_cents')
+      .in('id', productIds);
+  
+    const line_items = cartItems.map(ci => {
+      const p = products.find(pr => pr.id === ci.product_id);
+      return {
+        quantity: ci.qty,
+        price_data: {
+          currency: 'eur',
+          product_data: { name: p.name },
+          unit_amount: p.price_cents
+        }
+      };
+    });
+  
+    // ✅ Send token for authorization to Supabase edge function
+    const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/smart-responder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ line_items, email })
+    });
+  
+    const data = await res.json();
+  
+    if (res.ok && data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error("❌ Checkout failed:", data);
+      alert("Checkout failed. Please try again.");
+    }
   });
-
-  const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/smart-responder', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ line_items, email })
-  });
-
-  const result = await res.json();
-  if (result.url) {
-    window.location.href = result.url;
-  } else {
-    alert('Something went wrong with checkout!');
-    console.error(result);
-  }
-});
+  
 
 renderCart();
