@@ -97,6 +97,7 @@ checkoutBtn.addEventListener('click', async e => {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) return window.location.replace("login.html");
   const uid = session.user.id;
+  const email = session.user.email;
 
   const { data: cartItems } = await sb
     .from('cart_items')
@@ -109,17 +110,19 @@ checkoutBtn.addEventListener('click', async e => {
     .select('id, name, price_cents')
     .in('id', productIds);
 
-  const items = cartItems.map(ci => {
+  const line_items = cartItems.map(ci => {
     const p = products.find(pr => pr.id === ci.product_id);
     return {
-      name: p.name,
-      price_cents: p.price_cents,
-      qty: ci.qty
+      price_data: {
+        currency: 'eur',
+        product_data: { name: p.name },
+        unit_amount: p.price_cents,
+      },
+      quantity: ci.qty
     };
   });
 
   const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/smart-responder', {
-
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ line_items, email })
