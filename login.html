@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitFusion — Sign In</title>
+
+  <!-- global site styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Supabase SDK + page logic -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+
+   
+
+
+  <!-- login.html -->
+<script type="module" src="js/login.js" defer></script>
+
+</head>
+
+<body class="auth-body">
+
+  <main class="auth-wrapper">
+
+    <!-- ▸ LEFT gradient panel -->
+    <section class="auth-welcome">
+      <img src="logo71.gif" class="panel-logo" alt="FitFusion logo" />
+      <h1 class="auth-title">Welcome Back</h1>
+      <p>Sign in to continue your fitness journey.</p>
+    </section>
+
+    <!-- ▸ RIGHT form panel -->
+    <section class="auth-form">
+      <h2>Sign In</h2>
+
+      <form id="loginForm">
+
+        <p id="authMessage" style="height:1.2rem;margin-top:.25rem;"></p>
+
+        <label>
+          Email Address
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </label>
+
+        <label>
+          Password
+          <input type="password" id="password" placeholder="Enter your password" required />
+        </label>
+
+        <button type="submit" class="btn-auth">Continue</button>
+      </form>
+
+      <p class="auth-or">or connect with social</p>
+
+      <button class="social twitter"  type="button">Sign in with Twitter</button>
+      <button class="social facebook" type="button">Sign in with Facebook</button>
+
+      <!-- ↳ NEW: sign‑up link -->
+      <p style="margin-top:1.25rem;font-size:.9rem;color:#444;">
+        New to FitFusion?
+        <a href="signup.html" style="color:var(--ff-purple);font-weight:600;text-decoration:none;">
+          Create Account
+        </a>
+      </p>
+    </section>
+
+  </main>
+
+</body>
+</html>

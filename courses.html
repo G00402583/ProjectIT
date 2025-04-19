@@ -2,63 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FitFusion - Courses</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FitFusion – Courses</title>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-   <!-- NAVBAR -->
-   <header class="cool-header">
+  <!-- ───── NAVBAR ───── -->
+  <header class="cool-header">
     <div class="header-left">
       <a href="index.html" class="brand-link">
         <img src="logo71.gif" alt="FitFusion Logo" />
       </a>
-    </div> 
+    </div>
 
     <nav class="header-nav">
-      <a href="shop.html" class="nav-item">Shop</a>
-      <a href="cart.html" class="nav-item">Cart</a>
-      <a href="courses.html" class="nav-item">Courses</a>
-      <!-- "highlight" -->
+      <a href="shop.html"    class="nav-item">Shop</a>
+      <a href="cart.html"    class="nav-item">Cart</a>
+      <a href="courses.html" class="nav-item active">Courses</a>
       <a href="contact.html" class="nav-item highlight">Contact</a>
+      <a id="logoutLink" class="nav-item" href="#" style="display:none;">Log out</a>
     </nav>
   </header>
 
-  <!-- Courses Container -->
+  <!-- ───── COURSES CONTENT ───── -->
   <div class="container">
     <h2>Our Courses</h2>
-    <p>Take your fitness to the next level with our expert-led courses.</p>
+    <p>Take your fitness to the next level with our expert‑led courses.</p>
 
-    <div class="product-grid">
-      <!-- Course 1 -->
-      <div class="product-item">
-        <img src="https://via.placeholder.com/400x300?text=Beginner+Course" alt="Beginner Course">
-        <div class="product-info">
-          <h3>Beginner Course</h3>
-          <p>Start your fitness journey with the fundamentals.</p>
-          <a href="cart.html" class="btn">Enroll Now</a>
-        </div>
-      </div>
-
-      <!-- Course 2 -->
-      <div class="product-item">
-        <img src="https://via.placeholder.com/400x300?text=Advanced+Course" alt="Advanced Course">
-        <div class="product-info">
-          <h3>Advanced Course</h3>
-          <p>Challenge yourself with high-intensity workouts.</p>
-          <a href="cart.html" class="btn">Enroll Now</a>
-        </div>
-      </div>
-
-      <!-- More Courses As Needed -->
-    </div>
+    <div id="courseGrid" class="product-grid"><!-- cards injected here --></div>
   </div>
 
-  <!-- Footer -->
   <footer>
-    <p>© 2025 FitFusion. All rights reserved.</p>
+    <p>© 2025 FitFusion. All rights reserved.</p>
   </footer>
 
+  <!-- ───── SCRIPTS ───── -->
+
+  <!-- 1) Supabase CDN (first) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+
+  <!-- 2) fetch real courses, then attach the guard -->
+  <script type="module">
+    import { sb } from "./js/supaClient.js";
+
+    const { data: courses, error } = await sb
+      .from("products")
+      .select("*")
+      .eq("kind", "course");
+
+    if (error){
+      console.error("Could not load courses:", error.message);
+    }
+
+    const grid = document.getElementById("courseGrid");
+    grid.innerHTML = courses.map(c => `
+      <div class="product-item">
+        <img src="${c.image_url}" alt="${c.name}">
+        <div class="product-info">
+          <h3>${c.name}</h3>
+          <p>${c.description}</p>
+          <p class="product-price">€${(c.price_cents / 100).toFixed(2)}</p>
+          <a href="#" class="btn btn-enroll"
+             data-course="${c.id}">Enroll Now</a>
+        </div>
+      </div>
+    `).join("");
+
+    await import("./js/courseGuard.js");
+  </script>
+
+  <!-- Inline style (optional: move to style.css if preferred) -->
+  <style>
+    .product-price {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #222;
+      margin: 6px 0 10px;
+    }
+  </style>
 </body>
 </html>

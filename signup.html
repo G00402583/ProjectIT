@@ -1,0 +1,68 @@
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial‑scale=1.0" />
+  <title>FitFusion — Sign Up</title>
+
+  <!-- global styles (already contains the auth‑page CSS you wrote) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- 1️⃣ Supabase UMD -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js">
+  </script>
+
+  <!-- 2️⃣ page logic -->
+  <script type="module" src="js/signup.js"></script>
+
+</head>
+
+<body class="auth-body">
+  <main class="auth-wrapper">
+
+    <!-- ▸ Left gradient panel -->
+    <section class="auth-welcome">
+      <img src="logo71.gif" class="panel-logo" alt="FitFusion logo" />
+      <h1 class="auth-title">Join&nbsp;FitFusion</h1>
+      <p>Create your free account and start training today.</p>
+    </section>
+
+    <!-- ▸ Right form panel -->
+    <section class="auth-form">
+      <h2>Sign Up</h2>
+
+      <form id="signupForm">
+        <label>
+          Email Address
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </label>
+
+        <label>
+          Password
+          <input type="password" id="password" placeholder="Create a password" required />
+        </label>
+
+        <label>
+          Confirm Password
+          <input type="password" id="password2" placeholder="Repeat password" required />
+        </label>
+
+        <button type="submit" class="btn-auth">Create Account</button>
+      </form>
+
+      <p class="auth-or">or connect with social</p>
+
+      <button class="social twitter"  type="button">Sign up with Twitter</button>
+      <button class="social facebook" type="button">Sign up with Facebook</button>
+
+      <p style="margin-top:1.25rem;font-size:0.9rem;">
+        Already have an account?
+        <a href="login.html" style="color:var(--ff-purple);font-weight:600;">Sign In</a>
+      </p>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -2,61 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FitFusion - Cart</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FitFusion – Cart</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-   <!--  NAVBAR  -->
-   <header class="cool-header">
+  <!-- NAVBAR -->
+  <header class="cool-header">
     <div class="header-left">
       <a href="index.html" class="brand-link">
         <img src="logo71.gif" alt="FitFusion Logo" />
       </a>
     </div>
-
     <nav class="header-nav">
       <a href="shop.html" class="nav-item">Shop</a>
-      <a href="cart.html" class="nav-item">Cart</a>
+      <a href="cart.html" class="nav-item active">Cart</a>
       <a href="courses.html" class="nav-item">Courses</a>
-      <!-- highlight -->
       <a href="contact.html" class="nav-item highlight">Contact</a>
+      <a id="logoutLink" class="nav-item" href="#" style="display:none;">Log out</a>
     </nav>
   </header>
 
-  <!-- Cart Container -->
+  <!-- CART TABLE -->
   <div class="container">
     <h2>Your Cart</h2>
-    <div class="cart-container">
-      <!-- Example cart items (Static placeholders) -->
-      <div class="cart-item">
-        <div class="item-info">
-          <img src="https://via.placeholder.com/80x80?text=Item+1" alt="Item 1" />
-          <p>Fitness eBook 1</p>
-        </div>
-        <p>$9.99</p>
-      </div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Sub‑Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="cartBody"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4" style="text-align:right;"><strong>Total</strong></td>
+          <td id="cartTotal">€ 0.00</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    
 
-      <div class="cart-item">
-        <div class="item-info">
-          <img src="https://via.placeholder.com/80x80?text=Item+2" alt="Item 2" />
-          <p>Workout Plan</p>
-        </div>
-        <p>$14.99</p>
-      </div>
-
-      <!-- Cart total or checkout section -->
-      <hr />
-      <h3>Total: $24.98</h3>
-      <button class="btn">Proceed to Checkout</button>
-    </div>
+    <button id="checkoutBtn" class="btn">Proceed to Checkout</button>
   </div>
 
-  <!-- Footer -->
   <footer>
-    <p>© 2025 FitFusion. All rights reserved.</p>
+    <p>© 2025 FitFusion. All rights reserved.</p>
   </footer>
 
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+  <script type="module" src="js/cart.js"></script>
 </body>
 </html>
