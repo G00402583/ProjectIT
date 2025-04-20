@@ -27,7 +27,7 @@ async function renderCart() {
   const productIds = cartItems.map(item => item.product_id);
   const { data: products, error: prodErr } = await sb
     .from('products')
-    .select('id, name, image_url, price_cents')
+    .select('id, name, image_url, price_cents, variant_id')
     .in('id', productIds);
 
   if (prodErr) {
@@ -93,12 +93,12 @@ logoutLink.addEventListener('click', async e => {
 checkoutBtn.addEventListener('click', async e => {
   e.preventDefault();
 
-  const { data: { session }, error } = await sb.auth.getSession();
-  if (!session) return window.location.replace("login.html");
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return window.location.replace('login.html');
 
-  const token = session.access_token; // ✅ Authorization token
   const uid = session.user.id;
   const email = session.user.email;
+  const token = session.access_token;
 
   const { data: cartItems } = await sb
     .from('cart_items')
@@ -112,10 +112,10 @@ checkoutBtn.addEventListener('click', async e => {
     .in('id', productIds);
 
   const line_items = cartItems.map(ci => {
-    const p = products.find(pr => pr.id === ci.product_id);
+    const product = products.find(p => p.id === ci.product_id);
     return {
-      quantity: ci.qty,
-      variant_id: p.variant_id
+      variant_id: product.variant_id,
+      quantity: ci.qty
     };
   });
 
@@ -124,7 +124,7 @@ checkoutBtn.addEventListener('click', async e => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // ✅ Fixes the 401 error
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ line_items, email })
     });
@@ -134,12 +134,12 @@ checkoutBtn.addEventListener('click', async e => {
     if (res.ok && data?.url) {
       window.location.href = data.url;
     } else {
-      console.error("❌ Checkout failed:", data);
-      alert("Checkout failed. Please try again.");
+      console.error('Checkout failed:', data);
+      alert('Checkout failed. Try again.');
     }
   } catch (err) {
-    console.error("❌ Error contacting server:", err);
-    alert("Something went wrong. Try again.");
+    console.error('Error contacting server:', err);
+    alert('Something went wrong. Try again.');
   }
 });
 
