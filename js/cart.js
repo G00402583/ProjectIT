@@ -124,7 +124,7 @@ checkoutBtn.addEventListener('click', async e => {
     });
   
     try {
-      const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
+      const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/smart-responder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
