@@ -1,4 +1,4 @@
-// js/cart.js – fetch & render cart, support inline quantity updates and Stripe checkout
+// js/cart.js – fetch & render cart, support inline quantity updates and Lemon Squeezy checkout
 import { sb } from './supaClient.js';
 
 const cartBody    = document.getElementById('cartBody');
@@ -6,6 +6,12 @@ const cartTotal   = document.getElementById('cartTotal');
 const logoutLink  = document.getElementById('logoutLink');
 const checkoutBtn = document.getElementById('checkoutBtn');
 
+const lemonLinks = {
+    'FAST Fat‑Loss eBook': 'https://fitfusionirl.lemonsqueezy.com/buy/72eca115-ef98-489e-b7cb-ce1e325226a2?discount=0',
+    'Beginner Course': 'https://fitfusionirl.lemonsqueezy.com/buy/8ff0ecef-8726-45a6-9c58-6b62637c72e6',
+    'Advanced Course': 'https://fitfusionirl.lemonsqueezy.com/buy/12ff1ccb-cc6d-4275-9ee3-63037091e625?discount=0'
+  };
+  
 async function renderCart() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) return window.location.replace('login.html?next=cart.html');
@@ -98,54 +104,52 @@ checkoutBtn.addEventListener('click', async e => {
   
     const uid = session.user.id;
     const email = session.user.email;
-    const token = session.access_token;
   
+    // Get cart items
     const { data: cartItems } = await sb
       .from('cart_items')
       .select('qty, product_id')
       .eq('cart_id', uid);
   
+    // Get related products
     const productIds = cartItems.map(ci => ci.product_id);
     const { data: products } = await sb
       .from('products')
-      .select('id, name, price_cents')
+      .select('id, name, variant_id')
       .in('id', productIds);
   
     const line_items = cartItems.map(ci => {
       const p = products.find(pr => pr.id === ci.product_id);
       return {
         quantity: ci.qty,
-        price_data: {
-          currency: 'eur',
-          product_data: { name: p.name },
-          unit_amount: p.price_cents
-        }
+        variant_id: p.variant_id
       };
     });
   
     try {
-      const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/smart-responder', {
+      const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ line_items, email })
       });
   
       const data = await res.json();
   
-      if (res.ok && data.url) {
+      if (res.ok && data?.url) {
         window.location.href = data.url;
       } else {
         console.error("❌ Checkout failed:", data);
         alert("Checkout failed. Please try again.");
       }
     } catch (err) {
-      console.error("❌ Error sending to Stripe:", err);
-      alert("Something went wrong. Please try again.");
+      console.error("❌ Error contacting server:", err);
+      alert("Something went wrong. Try again.");
     }
   });
+  
+  
   
 
 renderCart();
