@@ -6,12 +6,6 @@ const cartTotal   = document.getElementById('cartTotal');
 const logoutLink  = document.getElementById('logoutLink');
 const checkoutBtn = document.getElementById('checkoutBtn');
 
-const lemonLinks = {
-    'FAST Fat‑Loss eBook': 'https://fitfusionirl.lemonsqueezy.com/buy/72eca115-ef98-489e-b7cb-ce1e325226a2?discount=0',
-    'Beginner Course': 'https://fitfusionirl.lemonsqueezy.com/buy/8ff0ecef-8726-45a6-9c58-6b62637c72e6',
-    'Advanced Course': 'https://fitfusionirl.lemonsqueezy.com/buy/12ff1ccb-cc6d-4275-9ee3-63037091e625?discount=0'
-  };
-  
 async function renderCart() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) return window.location.replace('login.html?next=cart.html');
@@ -97,59 +91,56 @@ logoutLink.addEventListener('click', async e => {
 });
 
 checkoutBtn.addEventListener('click', async e => {
-    e.preventDefault();
-  
-    const { data: { session }, error } = await sb.auth.getSession();
-    if (!session) return window.location.replace("login.html");
-  
-    const uid = session.user.id;
-    const email = session.user.email;
-  
-    // Get cart items
-    const { data: cartItems } = await sb
-      .from('cart_items')
-      .select('qty, product_id')
-      .eq('cart_id', uid);
-  
-    // Get related products
-    const productIds = cartItems.map(ci => ci.product_id);
-    const { data: products } = await sb
-      .from('products')
-      .select('id, name, variant_id')
-      .in('id', productIds);
-  
-    const line_items = cartItems.map(ci => {
-      const p = products.find(pr => pr.id === ci.product_id);
-      return {
-        quantity: ci.qty,
-        variant_id: p.variant_id
-      };
-    });
-  
-    try {
-      const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ line_items, email })
-      });
-  
-      const data = await res.json();
-  
-      if (res.ok && data?.url) {
-        window.location.href = data.url;
-      } else {
-        console.error("❌ Checkout failed:", data);
-        alert("Checkout failed. Please try again.");
-      }
-    } catch (err) {
-      console.error("❌ Error contacting server:", err);
-      alert("Something went wrong. Try again.");
-    }
+  e.preventDefault();
+
+  const { data: { session }, error } = await sb.auth.getSession();
+  if (!session) return window.location.replace("login.html");
+
+  const token = session.access_token; // ✅ Authorization token
+  const uid = session.user.id;
+  const email = session.user.email;
+
+  const { data: cartItems } = await sb
+    .from('cart_items')
+    .select('qty, product_id')
+    .eq('cart_id', uid);
+
+  const productIds = cartItems.map(ci => ci.product_id);
+  const { data: products } = await sb
+    .from('products')
+    .select('id, name, variant_id')
+    .in('id', productIds);
+
+  const line_items = cartItems.map(ci => {
+    const p = products.find(pr => pr.id === ci.product_id);
+    return {
+      quantity: ci.qty,
+      variant_id: p.variant_id
+    };
   });
-  
-  
-  
+
+  try {
+    const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // ✅ Fixes the 401 error
+      },
+      body: JSON.stringify({ line_items, email })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data?.url) {
+      window.location.href = data.url;
+    } else {
+      console.error("❌ Checkout failed:", data);
+      alert("Checkout failed. Please try again.");
+    }
+  } catch (err) {
+    console.error("❌ Error contacting server:", err);
+    alert("Something went wrong. Try again.");
+  }
+});
 
 renderCart();
