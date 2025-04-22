@@ -1,0 +1,60 @@
+<!-- This is the new code written -->
+<!-- Description: Updated checkout.html to collect card details and prepare for Supabase storage -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout | FitFusion</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ✅ Load Supabase first -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+
+<!-- ✅ Then load your dynamic navbar -->
+<script type="module" src="./js/navbar.js"></script>
+
+<div class="container">
+  <h2>Checkout</h2>
+
+  <form id="checkoutForm" class="checkout-form">
+    <h3>Your Details</h3>
+    <input type="text" name="name" placeholder="Full Name" required />
+    <input type="email" name="email" placeholder="Email Address" required />
+    <input type="text" name="phone" placeholder="Phone Number" required />
+    <input type="text" name="address" placeholder="Shipping Address" required />
+
+    <h3>Payment Info</h3>
+    <input type="text" name="card_number" placeholder="Card Number" required maxlength="19" />
+    <input type="text" name="expiry" placeholder="MM/YY" required pattern="\d{2}/\d{2}" />
+    <input type="text" name="cvc" placeholder="CVC" required maxlength="4" />
+
+    <h3>Order Summary</h3>
+    <table id="orderSummary">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="3">Loading...</td></tr>
+      </tbody>
+    </table>
+
+    <button type="submit" class="btn">Place Order</button>
+  </form>
+</div>
+
+<footer>
+  <p>© 2025 FitFusion. All rights reserved.</p>
+</footer>
+
+<!-- JS -->
+<script type="module" src="./js/checkout.js"></script>
+</body>
+</html>

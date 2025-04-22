@@ -1,0 +1,53 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | FitFusion</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ✅ Load Supabase first -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+
+<!-- ✅ Then load your dynamic navbar -->
+<script type="module" src="./js/navbar.js"></script>
+
+
+<!-- Dashboard Content -->
+<div class="container">
+  <h2>Welcome to Your Dashboard</h2>
+
+  <div id="userInfo">
+    <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
+    <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+  </div>
+
+  <div class="bio-section">
+    <h3>Your Bio</h3>
+    <form id="bioForm">
+      <textarea name="bio" id="bioInput" placeholder="Write something about yourself..." rows="4" required></textarea>
+      <button type="submit" class="btn">Save Bio</button>
+    </form>
+    <p id="bioStatus"></p>
+  </div>
+
+  <div class="purchases-section">
+    <h3>Your Purchased Items</h3>
+    <div id="purchasedItems">Loading...</div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 FitFusion. All rights reserved.</p>
+</footer>
+
+<!-- Supabase + JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+<script type="module" src="./js/dashboard.js"></script>
+
+</body>
+</html>

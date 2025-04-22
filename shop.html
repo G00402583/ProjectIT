@@ -10,23 +10,11 @@
 </head>
 <body>
 
-  <!-- ───────── HEADER / NAV ───────── -->
-  <header class="cool-header">
-    <div class="header-left">
-      <a href="index.html" class="brand-link">
-        <img src="logo71.gif" alt="FitFusion Logo" />
-      </a>
-    </div>
+ <!-- ✅ Load Supabase first -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
 
-    <nav class="header-nav">
-      <a href="shop.html"  class="nav-item active">Shop</a>
-      <a href="cart.html"  class="nav-item">Cart</a>
-      <a href="courses.html" class="nav-item">Courses</a>
-      <a href="contact.html" class="nav-item highlight">Contact</a>
-      <!-- toggled visible by shopGuard.js -->
-      <a id="logoutLink" class="nav-item" href="#" style="display:none;">Log out</a>
-    </nav>
-  </header>
+<!-- ✅ Then load your dynamic navbar -->
+<script type="module" src="./js/navbar.js"></script>
 
   <!-- ───────── SHOP CONTENT ───────── -->
   <div class="container">

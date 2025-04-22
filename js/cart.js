@@ -1,4 +1,4 @@
-// js/cart.js – fetch & render cart, support inline quantity updates and Lemon Squeezy checkout
+// js/cart.js – fetch & render cart, support inline quantity updates and redirect to custom checkout
 import { sb } from './supaClient.js';
 
 const cartBody    = document.getElementById('cartBody');
@@ -27,7 +27,7 @@ async function renderCart() {
   const productIds = cartItems.map(item => item.product_id);
   const { data: products, error: prodErr } = await sb
     .from('products')
-    .select('id, name, image_url, price_cents, variant_id')
+    .select('id, name, image_url, price_cents')
     .in('id', productIds);
 
   if (prodErr) {
@@ -90,57 +90,13 @@ logoutLink.addEventListener('click', async e => {
   window.location.replace('login.html');
 });
 
+// ✅ Redirect to your internal checkout page
 checkoutBtn.addEventListener('click', async e => {
   e.preventDefault();
-
   const { data: { session } } = await sb.auth.getSession();
   if (!session) return window.location.replace('login.html');
 
-  const uid = session.user.id;
-  const email = session.user.email;
-  const token = session.access_token;
-
-  const { data: cartItems } = await sb
-    .from('cart_items')
-    .select('qty, product_id')
-    .eq('cart_id', uid);
-
-  const productIds = cartItems.map(ci => ci.product_id);
-  const { data: products } = await sb
-    .from('products')
-    .select('id, name, variant_id')
-    .in('id', productIds);
-
-  const line_items = cartItems.map(ci => {
-    const product = products.find(p => p.id === ci.product_id);
-    return {
-      variant_id: product.variant_id,
-      quantity: ci.qty
-    };
-  });
-
-  try {
-    const res = await fetch('https://kqzevnsdurpptiaxszqq.supabase.co/functions/v1/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ line_items, email })
-    });
-
-    const data = await res.json();
-
-    if (res.ok && data?.url) {
-      window.location.href = data.url;
-    } else {
-      console.error('Checkout failed:', data);
-      alert('Checkout failed. Try again.');
-    }
-  } catch (err) {
-    console.error('Error contacting server:', err);
-    alert('Something went wrong. Try again.');
-  }
+  window.location.href = 'checkout.html';
 });
 
 renderCart();
