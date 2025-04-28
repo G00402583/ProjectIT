@@ -1,261 +1,224 @@
-/*****************************************
- 1. Supabase Configuration
-*****************************************/
-// Replace with your actual Supabase values
-const SUPABASE_URL = "https://kqzevnsdurpptiaxszqq.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxemV2bnNkdXJwcHRpYXhzenFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjA4NDYsImV4cCI6MjA1OTU5Njg0Nn0.eM-M08VulR5HiwKs-t7y2xehqUwBJPW0dnKENxMvArg"; // truncated for brevity
+/******************************************************************
+  This is the new code written
+  ---------------------------------------------------------------
+  Description
+  ===========
+  • Complete choose-program.js for the 9-step FitFusion wizard.  
+    – Works with the HTML you already have (section IDs step1-9,
+      Next / Back buttons, and card selections).  
+  • Saves every selection to the **program_choices** table in
+    Supabase, including **user_id** if the visitor is logged in.  
+  • Looks up the visitor’s first name from the `profiles` table
+    (falls back to full_name → email prefix → “friend”).  
+  • Generates a personalised recommendation:  
+      – Goal-based program name + product links.  
+      – Natural-language grammar (“an outdoor setting”, “an advanced
+        athlete”, “no injuries”, etc.).  
+      – Uses **the time the user actually chose** (“your planned
+        30-minute sessions”, “your 1-hour routine”, “your 2-hour
+        daily block”) instead of repeating “we recommend…”.  
+      – Adds a micro-tip matched to that time choice.  
+  • Everything wrapped in an async IIFE so you don’t need
+    `type="module"` in the HTML.
+******************************************************************/
 
-// Create the Supabase client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// Name of your table in Supabase
-const TABLE_NAME = "program_choices";
-
-/*****************************************
- 2. Wizard Variables
-*****************************************/
-let selectedAge    = null;
-let selectedBody   = null;
-let selectedGender = null;
-let selectedGoal   = null;
-let selectedFitness = null;
-let selectedInjury = null;
-let selectedLocation = null;
-let selectedTime   = null;
-
-// Step sections
-const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
-const step3 = document.getElementById("step3");
-const step4 = document.getElementById("step4");
-const step5 = document.getElementById("step5");
-const step6 = document.getElementById("step6");
-const step7 = document.getElementById("step7");
-const step8 = document.getElementById("step8");
-const step9 = document.getElementById("step9");
-
-// Buttons
-const btnNext1 = document.getElementById("btnNext1");
-const btnNext2 = document.getElementById("btnNext2");
-const btnNext3 = document.getElementById("btnNext3");
-const btnNext4 = document.getElementById("btnNext4");
-const btnNext5 = document.getElementById("btnNext5");
-const btnNext6 = document.getElementById("btnNext6");
-const btnNext7 = document.getElementById("btnNext7");
-const btnNext8 = document.getElementById("btnNext8");
-
-const btnBack1 = document.getElementById("btnBack1");
-const btnBack2 = document.getElementById("btnBack2");
-const btnBack3 = document.getElementById("btnBack3");
-const btnBack4 = document.getElementById("btnBack4");
-const btnBack5 = document.getElementById("btnBack5");
-const btnBack6 = document.getElementById("btnBack6");
-const btnBack7 = document.getElementById("btnBack7");
-const btnBack8 = document.getElementById("btnBack8");
-
-// Recommendation box
-const recommendationBox = document.getElementById("recommendationBox");
-
-/*****************************************
- 3. Wizard Step Event Listeners
-*****************************************/
-// === STEP 1: Age selection
-step1.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step1.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedAge = card.getAttribute("data-age");
-    btnNext1.disabled = false;
-  });
-});
-btnNext1.addEventListener("click", () => {
-  step1.classList.remove("active");
-  step2.classList.add("active");
-});
-
-// === STEP 2: Body type
-step2.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step2.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedBody = card.getAttribute("data-body");
-    btnNext2.disabled = false;
-  });
-});
-btnNext2.addEventListener("click", () => {
-  step2.classList.remove("active");
-  step3.classList.add("active");
-});
-btnBack1.addEventListener("click", () => {
-  step2.classList.remove("active");
-  step1.classList.add("active");
-});
-
-// === STEP 3: Gender
-step3.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step3.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedGender = card.getAttribute("data-gender");
-    btnNext3.disabled = false;
-  });
-});
-btnNext3.addEventListener("click", () => {
-  step3.classList.remove("active");
-  step4.classList.add("active");
-});
-btnBack2.addEventListener("click", () => {
-  step3.classList.remove("active");
-  step2.classList.add("active");
-});
-
-// === STEP 4: Primary Goal
-step4.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step4.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedGoal = card.getAttribute("data-goal");
-    btnNext4.disabled = false;
-  });
-});
-btnNext4.addEventListener("click", () => {
-  step4.classList.remove("active");
-  step5.classList.add("active");
-});
-btnBack3.addEventListener("click", () => {
-  step4.classList.remove("active");
-  step3.classList.add("active");
-});
-
-// === STEP 5: Fitness Level
-step5.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step5.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedFitness = card.getAttribute("data-fitness");
-    btnNext5.disabled = false;
-  });
-});
-btnNext5.addEventListener("click", () => {
-  step5.classList.remove("active");
-  step6.classList.add("active");
-});
-btnBack4.addEventListener("click", () => {
-  step5.classList.remove("active");
-  step4.classList.add("active");
-});
-
-// === STEP 6: Injury
-step6.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step6.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedInjury = card.getAttribute("data-injury");
-    btnNext6.disabled = false;
-  });
-});
-btnNext6.addEventListener("click", () => {
-  step6.classList.remove("active");
-  step7.classList.add("active");
-});
-btnBack5.addEventListener("click", () => {
-  step6.classList.remove("active");
-  step5.classList.add("active");
-});
-
-// === STEP 7: Location
-step7.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step7.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedLocation = card.getAttribute("data-location");
-    btnNext7.disabled = false;
-  });
-});
-btnNext7.addEventListener("click", () => {
-  step7.classList.remove("active");
-  step8.classList.add("active");
-});
-btnBack6.addEventListener("click", () => {
-  step7.classList.remove("active");
-  step6.classList.add("active");
-});
-
-// === STEP 8: Time Commitment
-step8.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    step8.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedTime = card.getAttribute("data-time");
-    btnNext8.disabled = false;
-  });
-});
-btnNext8.addEventListener("click", async () => {
-  step8.classList.remove("active");
-  step9.classList.add("active");
-
-  // Show the recommendation
-  recommendationBox.innerHTML = getRecommendation();
-
-  // Then save to Supabase
-  await saveToSupabase();
-});
-btnBack7.addEventListener("click", () => {
-  step8.classList.remove("active");
-  step7.classList.add("active");
-});
-
-// === FINAL STEP (STEP 9)
-btnBack8.addEventListener("click", () => {
-  step9.classList.remove("active");
-  step8.classList.add("active");
-});
-
-/*****************************************
- 4. Save to Supabase
-*****************************************/
-async function saveToSupabase() {
-  const payload = {
-    age: selectedAge,
-    body_type: selectedBody,
-    gender: selectedGender,
-    goal: selectedGoal,
-    fitness_level: selectedFitness,
-    injury_status: selectedInjury,
-    workout_location: selectedLocation,
-    time_commitment: selectedTime,
-    created_at: new Date().toISOString()
-  };
-
-  // Insert into your table
-  const { data, error } = await supabase
-    .from(TABLE_NAME)
-    .insert([ payload ]);
-
-  if (error) {
-    console.error("Error inserting data:", error.message);
-  } else {
-    console.log("Data successfully inserted:", data);
-  }
-}
-
-/*****************************************
- 5. Recommendation Logic
-*****************************************/
-function getRecommendation() {
-  return `
-    <h3>Hello, ${selectedGender || 'friend'}!</h3>
-    <p>A Balanced Fitness and Nutrition Program is perfect for your 
-    <strong>${selectedAge}</strong> age range,
-    <strong>${selectedBody}</strong> body type,
-    with a goal of <strong>${selectedGoal}</strong>.<br>
-    Since you're <strong>${selectedFitness}</strong>,
-    working out in a <strong>${selectedLocation}</strong> setting, and have
-    <strong>${selectedInjury === 'none' ? 'no injuries' : selectedInjury + ' injuries'}</strong>,
-    we recommend dedicating <strong>${selectedTime}</strong> to your daily routine.</p>
-
-    <p><strong>Tip:</strong> Check out our 
-    <a href="shop.html">Nutrition E-book</a> and 
-    <a href="courses.html">Workout Plan</a> for more details!</p>
-  `;
-}
+/* ==============================================================
+   1. Supabase client
+   ==============================================================*/
+   const SUPABASE_URL      = 'https://kqzevnsdurpptiaxszqq.supabase.co';
+   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxemV2bnNkdXJwcHRpYXhzenFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjA4NDYsImV4cCI6MjA1OTU5Njg0Nn0.eM-M08VulR5HiwKs-t7y2xehqUwBJPW0dnKENxMvArg';
+   const TABLE_NAME        = 'program_choices';
+   
+   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+   
+   /* ==============================================================
+      2. Wizard logic
+      ==============================================================*/
+   (async () => {
+   
+     /* ---------- 2.1  Identify the visitor ---------------------- */
+     let firstName = 'friend';
+     let userId    = null;
+   
+     try {
+       const { data: { session } } = await sb.auth.getSession();
+       if (session) {
+         userId = session.user.id;
+   
+         const { data: profile } = await sb
+           .from('profiles')
+           .select('first_name')
+           .eq('id', userId)
+           .single();
+   
+         firstName =
+           profile?.first_name?.trim() ||
+           session.user.user_metadata?.full_name?.split(' ')[0] ||
+           session.user.email.split('@')[0];
+       }
+     } catch {/* ignore errors, keep "friend" */ }
+   
+     /* ---------- 2.2  Cache DOM elements ------------------------ */
+     const steps    = Array.from({ length: 9 }, (_, i) => document.getElementById(`step${i + 1}`));
+     const nextBtns = [1,2,3,4,5,6,7,8].map(n => document.getElementById(`btnNext${n}`));
+     const backBtns = [1,2,3,4,5,6,7,8].map(n => document.getElementById(`btnBack${n}`));
+     const recBox   = document.getElementById('recommendationBox');
+   
+     /* ---------- 2.3  State store ------------------------------- */
+     const state = {
+       age      : '', body   : '', gender : '',
+       goal     : '', fitness: '', injury : '',
+       location : '', time   : ''
+     };
+   
+     /* ---------- 2.4  Utility functions ------------------------- */
+     let currentIndex = 0;
+     const showStep = idx => {
+       steps.forEach((s, i) => s.classList.toggle('active', i === idx));
+       currentIndex = idx;
+     };
+   
+     const handleSelect = (card, key) => {
+       card.parentElement
+           .querySelectorAll('.card')
+           .forEach(c => c.classList.remove('selected'));
+       card.classList.add('selected');
+   
+       state[key] = card.dataset[key];
+       nextBtns[currentIndex].disabled = false;
+     };
+   
+     /* attach card-click listeners */
+     const keys = ['age','body','gender','goal','fitness','injury','location','time'];
+     keys.forEach((key, idx) => {
+       steps[idx].querySelectorAll('.card')
+         .forEach(card => card.addEventListener('click', () => handleSelect(card, key)));
+     });
+   
+     /* ---------- 2.5  Next / Back navigation -------------------- */
+     nextBtns.forEach(btn => btn.addEventListener('click', async () => {
+       if (currentIndex < steps.length - 1) showStep(currentIndex + 1);
+   
+       /* We’ve just displayed Step-9 → build & save */
+       if (currentIndex === steps.length - 1) {
+         recBox.innerHTML = buildRecommendation();
+         await saveToSupabase();
+       }
+     }));
+   
+     backBtns.forEach(btn => btn.addEventListener('click', () => {
+       if (currentIndex > 0) showStep(currentIndex - 1);
+     }));
+   
+     /* ---------- 2.6  Generate recommendation ------------------- */
+     function buildRecommendation () {
+   
+       /* (A) Goal-specific program + tips */
+       let program = 'Balanced Fitness & Nutrition Program';
+       let tips    = [];
+   
+       switch (state.goal) {
+         case 'muscle-gain':
+           program = 'Muscle-Gain Mastery Program';
+           tips = [
+             '<a href="shop.html">Muscle-Gain eBook</a>',
+             '<a href="courses.html">Beginner Course</a>'
+           ];
+           break;
+         case 'weight-loss':
+           program = 'FAST Fat-Loss Program';
+           tips = [
+             '<a href="shop.html">FAST Fat-Loss eBook</a>',
+             '<a href="courses.html">HIIT Course</a>'
+           ];
+           break;
+         case 'toning':
+           program = 'Total-Tone Program';
+           tips = ['<a href="shop.html">Train Efficiently eBook</a>'];
+           break;
+         default:
+           program = 'Holistic Health Program';
+           tips = ['<a href="shop.html">Energy-Exertion eBook</a>'];
+       }
+   
+       /* (B) Grammar helpers */
+       const fitnessTxt = {
+         beginner    : 'a beginner',
+         intermediate: 'an intermediate trainee',
+         advanced    : 'an advanced athlete'
+       }[state.fitness] || 'an athlete';
+   
+       const locationTxt = {
+         gym     : 'the gym',
+         home    : 'a home environment',
+         outdoors: 'an outdoor setting'
+       }[state.location] || 'your chosen space';
+   
+       const injuryTxt = {
+         none : 'no injuries',
+         minor: 'some minor injuries',
+         major: 'major or chronic injuries'
+       }[state.injury] || 'injuries';
+   
+       /* (C) Time-choice phrasing + micro-tip */
+       const timeMap = {
+         '30min':  {
+           phrase: 'your planned 30-minute sessions',
+           micro : 'Focus on compound moves to maximise every minute.'
+         },
+         '1hour':  {
+           phrase: 'your 1-hour routine',
+           micro : 'Split the hour into warm-up, strength, then a short finisher.'
+         },
+         '2hours': {
+           phrase: 'your 2-hour daily block',
+           micro : 'Separate strength and cardio to get the most out of that time.'
+         }
+       };
+       const timeInfo = timeMap[state.time] || { phrase:`your ${state.time} sessions`, micro:'' };
+   
+       /* (D) Build the HTML */
+       return `
+         <h3>Hello, <span style="color:#7b4cf0;">${firstName}</span>!</h3>
+   
+         <p>${program} is perfect for your
+            <strong>${state.age}</strong> age range and
+            <strong>${state.body}</strong> body type${state.goal
+              ? `, with a goal of <strong>${state.goal}</strong>` : ''}.
+         </p>
+   
+         <p>Since you're <strong>${fitnessTxt}</strong>,
+            training in <strong>${locationTxt}</strong> and have
+            <strong>${injuryTxt}</strong>, <strong>${timeInfo.phrase}</strong> will set you up for success.</p>
+   
+         ${timeInfo.micro ? `<p>${timeInfo.micro}</p>` : ''}
+   
+         <p style="margin-top:1rem;"><strong>Tip:</strong> Check out
+            ${tips.join(' and ')} for more details!</p>
+       `;
+     }
+   
+     /* ---------- 2.7  Persist to Supabase ----------------------- */
+     async function saveToSupabase () {
+       const payload = {
+         user_id         : userId,
+         age             : state.age,
+         body_type       : state.body,
+         gender          : state.gender,
+         goal            : state.goal,
+         fitness_level   : state.fitness,
+         injury_status   : state.injury,
+         workout_location: state.location,
+         time_commitment : state.time,
+         created_at      : new Date().toISOString()
+       };
+   
+       const { error } = await sb.from(TABLE_NAME).insert([payload]);
+       if (error) console.error('Supabase insert failed:', error.message);
+     }
+   
+     /* ---------- 2.8  Kick off wizard --------------------------- */
+     showStep(0);
+   
+   })();   /* end IIFE */
+   

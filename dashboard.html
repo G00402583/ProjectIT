@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | FitFusion</title>
@@ -11,9 +12,14 @@
   <link rel="stylesheet" href="dashboard.css" />
 
   <!-- manifest -->
+   
   <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192x192.png" type="image/png">
+  
 </head>
 <body>
+
+  
 <!-- Supabase & shared navbar -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
 <script type="module" src="./js/navbar.js"></script>
@@ -27,7 +33,6 @@
     </div>
     <div class="sidebar-nav">
       <a href="#" id="dashboard-link">Dashboard</a>
-      <a href="orders.html" id="orders-link">Orders</a>
       <a href="#" id="settings-link">Settings</a>
       <a href="#" id="logoutBtn">Logout</a>
     </div>
@@ -132,5 +137,22 @@
 
 <!-- Dashboard JS (Handles Switching Views and Logic) -->
 <script type="module" src="./js/dashboard.js"></script>
+
+<script type="text/javascript">
+  (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+          verify: { projectID: '67bb7e47f2a0a0c3b2890357' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          voice: {
+            url: "https://runtime-api.voiceflow.com"
+          }
+        });
+      }
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+</script>
 </body>
 </html>

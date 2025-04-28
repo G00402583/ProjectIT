@@ -446,8 +446,8 @@ footer p {
 
 /* Center the entire wizard container and its content */
 .wizard-container {
-  max-width: 900px;       
-  margin: 2rem auto;      
+  max-width: 1100px;       
+  margin:2rem /*top*/ auto 2rem calc(50% - 480px); /* centred but 480 px to left */     
   text-align: center;     
   background: rgba(0, 0, 0, 0.4);
   border-radius: 8px;
