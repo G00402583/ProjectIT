@@ -1,31 +1,26 @@
-<!-- ✅ This is the new code written
-     Description: Unified dashboard with Settings subpage inside dashboard, NO inline JS
--->
+<!-- ✅ This is the new code written -->
+<!-- Description: Unified dashboard with Dashboard, Orders, and Settings inside one page. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | FitFusion</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="dashboard.css" />
-
-  <!-- manifest -->
-   
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon-192x192.png" type="image/png">
-  
 </head>
+
 <body>
 
-  
-<!-- Supabase & shared navbar -->
+<!-- ✅ Load Supabase and Navbar -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
 <script type="module" src="./js/navbar.js"></script>
 
 <div class="dashboard-container">
-  
+
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
@@ -33,6 +28,7 @@
     </div>
     <div class="sidebar-nav">
       <a href="#" id="dashboard-link">Dashboard</a>
+      <a href="#" id="orders-link">Orders</a>
       <a href="#" id="settings-link">Settings</a>
       <a href="#" id="logoutBtn">Logout</a>
     </div>
@@ -50,13 +46,13 @@
 
       <div class="dashboard-cards">
         <!-- Purchases -->
-        <div class="card" id="orders">
+        <div class="card">
           <h2>Purchased Items</h2>
           <div id="purchasedItems">Loading…</div>
         </div>
 
         <!-- Profile -->
-        <div class="card" id="profile">
+        <div class="card">
           <h2>Your Profile</h2>
 
           <!-- Avatar -->
@@ -66,26 +62,20 @@
             <button id="change-avatar-btn" type="button">Change photo</button>
           </div>
 
-          <!-- Profile Display View -->
+          <!-- Profile Display -->
           <div id="profile-display">
             <div class="profile-row">
-              <strong>Bio:</strong> 
-              <span id="bio-display"></span> 
-              <button id="edit-bio-btn">Edit</button>
+              <strong>Bio:</strong> <span id="bio-display"></span> <button id="edit-bio-btn">Edit</button>
             </div>
             <div class="profile-row">
-              <strong>Goals:</strong> 
-              <span id="goals-display"></span> 
-              <button id="edit-goals-btn">Edit</button>
+              <strong>Goals:</strong> <span id="goals-display"></span> <button id="edit-goals-btn">Edit</button>
             </div>
             <div class="profile-row">
-              <strong>Fitness level:</strong> 
-              <span id="level-display"></span> 
-              <button id="edit-level-btn">Edit</button>
+              <strong>Fitness level:</strong> <span id="level-display"></span> <button id="edit-level-btn">Edit</button>
             </div>
           </div>
 
-          <!-- Profile Edit Form (Hidden by Default) -->
+          <!-- Profile Edit Form -->
           <form id="profileForm" style="display: none;">
             <textarea id="bio-input" name="bio" rows="4" placeholder="Tell us about yourself…"></textarea>
             <textarea id="goals-input" name="goals" rows="4" placeholder="Your fitness goals…"></textarea>
@@ -93,6 +83,18 @@
             <button id="save-btn" class="btn" type="submit">Save</button>
           </form>
         </div>
+      </div>
+    </div>
+
+    <!-- ORDERS CONTENT (Hidden by Default) -->
+    <div id="orders-content" style="display: none;">
+      <section class="dashboard-header">
+        <h1>Your Orders</h1>
+        <p>Download your purchased items below.</p>
+      </section>
+
+      <div class="dashboard-cards" id="ordersList">
+        Loading your purchases...
       </div>
     </div>
 
@@ -135,24 +137,25 @@
 
 </div>
 
-<!-- Dashboard JS (Handles Switching Views and Logic) -->
+<!-- Dashboard JS -->
 <script type="module" src="./js/dashboard.js"></script>
 
 <script type="text/javascript">
-  (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '67bb7e47f2a0a0c3b2890357' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: {
-            url: "https://runtime-api.voiceflow.com"
-          }
-        });
-      }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-  })(document, 'script');
+(function(d, t) {
+    var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+    v.onload = function() {
+      window.voiceflow.chat.load({
+        verify: { projectID: '67bb7e47f2a0a0c3b2890357' },
+        url: 'https://general-runtime.voiceflow.com',
+        versionID: 'production',
+        voice: { url: "https://runtime-api.voiceflow.com" }
+      });
+    }
+    v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+    v.type = "text/javascript"; 
+    s.parentNode.insertBefore(v, s);
+})(document, 'script');
 </script>
+
 </body>
 </html>

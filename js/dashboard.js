@@ -1,10 +1,11 @@
 // ✅ This is the new code written
-// Description: Full dashboard logic with Dashboard/Settings view switching, Purchased Items fetching, Avatar upload, Profile editing, Settings updates, Soft Delete account, and Deleted Users Auto-Logout with Warning.
+// Description: Full dashboard logic with Dashboard/Orders/Settings view switching, Purchased Items fetching, Avatar upload, Profile editing, Settings updates, Soft Delete account, and Deleted Users Auto-Logout with Warning.
 
 import { sb } from './supaClient.js';
 
 /* ---------- DOM Elements ---------- */
 const purchasedDiv = document.getElementById('purchasedItems');
+const ordersList = document.getElementById('ordersList');
 const logoutBtn = document.getElementById('logoutBtn');
 
 // Avatar
@@ -32,10 +33,12 @@ const editLevelBtn = document.getElementById('edit-level-btn');
 // Sidebar links
 const dashboardLink = document.getElementById('dashboard-link');
 const settingsLink = document.getElementById('settings-link');
+const ordersLink = document.getElementById('orders-link');
 
 // Content areas
 const dashboardContent = document.getElementById('dashboard-content');
 const settingsContent = document.getElementById('settings-content');
+const ordersContent = document.getElementById('orders-content');
 
 // Settings forms
 const changeEmailForm = document.getElementById('change-email-form');
@@ -71,7 +74,7 @@ let userId = null;
   await Promise.all([loadPurchasedItems(), loadProfile()]);
 })();
 
-/* ---------- Load Purchased Items ---------- */
+/* ---------- Load Purchased Items (Dashboard View) ---------- */
 async function loadPurchasedItems() {
   const { data: orders, error: ordersError } = await sb
     .from('orders')
@@ -238,17 +241,87 @@ dashboardLink.addEventListener('click', e => {
   e.preventDefault();
   dashboardContent.style.display = 'block';
   settingsContent.style.display = 'none';
+  ordersContent.style.display = 'none';
   dashboardLink.classList.add('active');
   settingsLink.classList.remove('active');
+  ordersLink.classList.remove('active');
 });
 
 settingsLink.addEventListener('click', e => {
   e.preventDefault();
   dashboardContent.style.display = 'none';
   settingsContent.style.display = 'block';
+  ordersContent.style.display = 'none';
   settingsLink.classList.add('active');
   dashboardLink.classList.remove('active');
+  ordersLink.classList.remove('active');
 });
+
+ordersLink.addEventListener('click', e => {
+  e.preventDefault();
+  dashboardContent.style.display = 'none';
+  settingsContent.style.display = 'none';
+  ordersContent.style.display = 'block';
+  ordersLink.classList.add('active');
+  dashboardLink.classList.remove('active');
+  settingsLink.classList.remove('active');
+  loadOrders();
+});
+
+/* ---------- Load Orders ---------- */
+async function loadOrders() {
+  const { data: orders, error } = await sb
+    .from('orders')
+    .select('id, order_items (product_id, qty), user_id')
+    .eq('user_id', userId);
+
+  if (error) {
+    ordersList.innerHTML = '<p>Failed to load orders.</p>';
+    console.error(error);
+    return;
+  }
+
+  if (!orders.length) {
+    ordersList.innerHTML = '<p>No orders found.</p>';
+    return;
+  }
+
+  const productIds = orders.flatMap(order => order.order_items.map(item => item.product_id));
+  const { data: products } = await sb
+    .from('products')
+    .select('id, name');
+
+  const productMap = {};
+  products.forEach(p => productMap[p.id] = p);
+
+  const productDownloads = {
+    "Energy-Exertion eBook": "https://website.com/downloads/energy-exertion-ebook.pdf",
+    "Beginner Fitness Course": "https://website.com/downloads/beginner-fitness-course.zip",
+    "Train Efficiently eBook": "https://website.com/downloads/beginner-fitness-course.zip",
+    "FAST Fat‑Loss eBook": "https://website.com/downloads/FAST Fat‑Loss eBook.zip",
+    "Muscle-Gain eBook": "https://website.com/downloads/beginner-fitness-course.zip",
+    "Advanced Course": "https://website.com/downloads/beginner-fitness-course.zip",
+    "Intermediate Course": "https://website.com/downloads/beginner-fitness-course.zip"
+  };
+
+  ordersList.innerHTML = '';
+
+  orders.forEach(order => {
+    order.order_items.forEach(item => {
+      const product = productMap[item.product_id];
+      if (product) {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+          <h3>${product.name}</h3>
+          <p>Quantity: ${item.qty}</p>
+          ${productDownloads[product.name] ? `<a href="${productDownloads[product.name]}" class="btn" download>Download</a>` : ''}
+        `;
+        ordersList.appendChild(div);
+      }
+    });
+  });
+}
 
 /* ---------- Settings - Change Email ---------- */
 changeEmailForm.addEventListener('submit', async (e) => {
@@ -258,22 +331,11 @@ changeEmailForm.addEventListener('submit', async (e) => {
   const { error: authError } = await sb.auth.updateUser({ email: newEmail });
   if (authError) {
     console.error(authError);
-    alert('Failed to update email in Auth.');
+    alert('Failed to update email.');
     return;
   }
 
-  const { error: profileError } = await sb
-    .from('profiles')
-    .update({ email: newEmail })
-    .eq('id', userId);
-
-  if (profileError) {
-    console.error(profileError);
-    alert('Failed to update email in Profiles table.');
-    return;
-  }
-
-  alert('Email updated! Please check your inbox for confirmation.');
+  alert('Email updated successfully! Please check your inbox.');
 });
 
 /* ---------- Settings - Change Password ---------- */
@@ -286,36 +348,28 @@ changePasswordForm.addEventListener('submit', async (e) => {
     console.error(error);
     alert('Failed to update password.');
   } else {
-    alert('Password updated successfully! Please check your inbox if email confirmation is required.');
+    alert('Password updated successfully!');
   }
 });
 
 /* ---------- Settings - Soft Delete Account ---------- */
 deleteAccountBtn.addEventListener('click', async () => {
-  const confirmed = confirm('Are you absolutely sure you want to delete your account? This cannot be undone.');
+  const confirmed = confirm('Are you absolutely sure you want to delete your account?');
   if (!confirmed) return;
 
-  try {
-    const { error: profileError } = await sb
-      .from('profiles')
-      .update({ deleted_at: new Date().toISOString() })
-      .eq('id', userId);
+  const { error } = await sb
+    .from('profiles')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', userId);
 
-    if (profileError) {
-      console.error(profileError);
-      alert('Failed to mark account as deleted.');
-      return;
-    }
-
-    await sb.auth.signOut();
-
-    alert('Your account has been marked for deletion.');
-    window.location.href = 'login.html';
-
-  } catch (error) {
+  if (error) {
     console.error(error);
-    alert('Something went wrong.');
+    alert('Failed to delete account.');
+    return;
   }
+
+  await sb.auth.signOut();
+  window.location.href = 'login.html';
 });
 
 /* ---------- Logout ---------- */

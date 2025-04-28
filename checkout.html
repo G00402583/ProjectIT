@@ -1,3 +1,6 @@
+<!-- This is the new code written -->
+<!-- Description: Upgraded, professional version of your FitFusion checkout page with improved layout, styling, and better UI spacing while keeping your original structure and functionality. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +12,93 @@
   <!-- manifest -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon-192x192.png" type="image/png">
+
+  <style>
+    /* === Improved checkout page styles === */
+    .checkout-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 550px;
+      margin: 40px auto;
+    }
+  
+    .checkout-container h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #222;
+    }
+  
+    .checkout-form h3 {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: #444;
+    }
+  
+    .checkout-form input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #f7f7f7;
+      font-size: 0.95rem;
+    }
+  
+    #orderSummary {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+      background: #f7f7f7;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 0.95rem;
+    }
+  
+    #orderSummary td, #orderSummary th {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    #orderSummary tr:last-child td {
+      border-bottom: none;
+    }
+  
+    .btn {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+  
+    .btn:hover {
+      background: linear-gradient(to right, #2575fc, #6a11cb);
+    }
+  
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    #orderSummary td, #orderSummary th {
+  color: #333; 
+}
+
+  </style>
+  
 </head>
 <body>
 
@@ -18,7 +108,7 @@
 <!-- ✅ Then load your dynamic navbar -->
 <script type="module" src="./js/navbar.js"></script>
 
-<div class="container">
+<div class="checkout-container">
   <h2>Checkout</h2>
 
   <form id="checkoutForm" class="checkout-form">
@@ -31,7 +121,7 @@
     <h3>Payment Info</h3>
     <input type="text" name="card_number" placeholder="Card Number (e.g. 4242 4242 4242 4242)" required />
     <input type="text" name="expiry" placeholder="Expiry (MM/YY)" required />
-    <input type="text" name="cvc" placeholder="CVC (e.g. 123)" required />
+    <input type="text" name="cvc" placeholder="CVC (e.g. 876)" required />
 
     <h3>Order Summary</h3>
     <table id="orderSummary">
@@ -65,7 +155,9 @@
           }
         });
       }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+      v.type = "text/javascript"; 
+      s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
 </body>

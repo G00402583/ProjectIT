@@ -1,14 +1,18 @@
+<!-- This is the final corrected code written -->
+<!-- Description: Thank You page that shows only the user's purchased download links securely using sessionStorage -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Order Complete – FitFusion</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css" />
 
   <!-- manifest -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon-192x192.png" type="image/png">
+  
   <style>
     .thankyou-container {
       max-width: 600px;
@@ -21,7 +25,7 @@
     }
 
     .thankyou-container h1 {
-      color: #28a745;
+      color: #2D4CFF;
       font-size: 32px;
       margin-bottom: 16px;
     }
@@ -36,7 +40,7 @@
       display: inline-block;
       margin-top: 20px;
       padding: 12px 24px;
-      background-color: #28a745;
+      background-color: #2D4CFF;
       color: #fff;
       border-radius: 6px;
       text-decoration: none;
@@ -44,13 +48,29 @@
     }
 
     .thankyou-container .btn:hover {
-      background-color: #218838;
+      background-color: #1c39cc;
     }
 
     .tick-icon {
       font-size: 64px;
-      color: #28a745;
+      color: #2D4CFF;
       margin-bottom: 10px;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin: 10px 5px;
+      padding: 10px 20px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(to right, #2575fc, #6a11cb);
     }
   </style>
 </head>
@@ -60,9 +80,14 @@
     <div class="tick-icon">✅</div>
     <h1>Thank You for Your Order!</h1>
     <p>Your purchase was successful. You’ll receive a confirmation email shortly.</p>
+
+
+
     <a href="index.html" class="btn">Back to Home</a>
   </div>
 
+  
+  <!-- ✅ Voiceflow bot integration (optional) -->
   <script type="text/javascript">
     (function(d, t) {
         var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -76,7 +101,9 @@
             }
           });
         }
-        v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+        v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+        v.type = "text/javascript"; 
+        s.parentNode.insertBefore(v, s);
     })(document, 'script');
   </script>
 

@@ -280,3 +280,50 @@ textarea:focus {
   background-color: #444;
   outline: none;
 }
+
+/* Orders Grid */
+#ordersList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+/* Individual order card */
+#ordersList .card {
+  background: #1d1d1d;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+#ordersList .card:hover {
+  transform: translateY(-5px);
+}
+
+#ordersList h3 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+#ordersList p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+#ordersList .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+#ordersList .btn:hover {
+  background: linear-gradient(to right, #2575fc, #6a11cb);
+}

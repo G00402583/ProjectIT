@@ -866,4 +866,53 @@ tfoot td {
   color: #333;
 }
 
+/*checkout 
+
+.checkout-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  max-width: 700px;
+  margin: 40px auto;
+}
+
+.checkout-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.checkout-section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.checkout-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-size: 1rem;
+}
+
+.place-order-btn {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.place-order-btn:hover {
+  background: linear-gradient(to right, #2575fc, #6a11cb);
+}
 

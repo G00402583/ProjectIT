@@ -136,6 +136,13 @@ form.addEventListener('submit', async (e) => {
   // Clear cart
   await sb.from('cart_items').delete().eq('cart_id', userId);
 
+  // 🔥 Save purchased items
+const purchasedItems = cartItems.map(item => {
+  const product = products.find(p => p.id === item.product_id);
+  return { name: product.name };
+});
+sessionStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
+
   // Redirect to thank you page
   window.location.href = 'thank-you.html';
 });
