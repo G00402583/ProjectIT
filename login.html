@@ -8,24 +8,33 @@
   <!-- global site styles -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- manifest -->
+  <link rel="manifest" href="manifest.json" />
+
   <!-- Supabase SDK + page logic -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
 
    
 
 
-  <!-- login.html -->
-<script type="module" src="js/login.js" defer></script>
 
 </head>
 
 <body class="auth-body">
 
+ <!-- gradient bar across the top of the auth page -->
+<header class="auth-topbar">
+  <a href="index.html" class="auth-logo">
+    <img src="logo71.gif" alt="FitFusion logo">
+  </a>
+</header>
+
+
   <main class="auth-wrapper">
 
     <!-- ▸ LEFT gradient panel -->
     <section class="auth-welcome">
-      <img src="logo71.gif" class="panel-logo" alt="FitFusion logo" />
+     
       <h1 class="auth-title">Welcome Back</h1>
       <p>Sign in to continue your fitness journey.</p>
     </section>
@@ -66,6 +75,8 @@
     </section>
 
   </main>
+
+  <script type="module" src="js/login.js"></script> 
 
 </body>
 </html>

@@ -1,6 +1,3 @@
-<!-- This is the new code written -->
-<!-- Description: Updated checkout.html to collect card details and prepare for Supabase storage -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout | FitFusion</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- manifest -->
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
 
@@ -28,19 +28,13 @@
     <input type="text" name="address" placeholder="Shipping Address" required />
 
     <h3>Payment Info</h3>
-    <input type="text" name="card_number" placeholder="Card Number" required maxlength="19" />
-    <input type="text" name="expiry" placeholder="MM/YY" required pattern="\d{2}/\d{2}" />
-    <input type="text" name="cvc" placeholder="CVC" required maxlength="4" />
+    <input type="text" name="card_number" placeholder="Card Number (e.g. 4242 4242 4242 4242)" required />
+    <input type="text" name="expiry" placeholder="Expiry (MM/YY)" required />
+    <input type="text" name="cvc" placeholder="CVC (e.g. 123)" required />
 
     <h3>Order Summary</h3>
     <table id="orderSummary">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Qty</th>
-          <th>Subtotal</th>
-        </tr>
-      </thead>
+      <thead></thead>
       <tbody>
         <tr><td colspan="3">Loading...</td></tr>
       </tbody>
@@ -54,7 +48,7 @@
   <p>© 2025 FitFusion. All rights reserved.</p>
 </footer>
 
-<!-- JS -->
+<!-- JS logic -->
 <script type="module" src="./js/checkout.js"></script>
 </body>
 </html>

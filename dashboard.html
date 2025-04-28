@@ -1,53 +1,136 @@
-<!-- dashboard.html -->
+<!-- ✅ This is the new code written
+     Description: Unified dashboard with Settings subpage inside dashboard, NO inline JS
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | FitFusion</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+
+  <!-- manifest -->
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
-
-<!-- ✅ Load Supabase first -->
+<!-- Supabase & shared navbar -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
-
-<!-- ✅ Then load your dynamic navbar -->
 <script type="module" src="./js/navbar.js"></script>
 
+<div class="dashboard-container">
+  
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>FitFusion</h2>
+    </div>
+    <div class="sidebar-nav">
+      <a href="#" id="dashboard-link">Dashboard</a>
+      <a href="orders.html" id="orders-link">Orders</a>
+      <a href="#" id="settings-link">Settings</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </div>
+  </aside>
 
-<!-- Dashboard Content -->
-<div class="container">
-  <h2>Welcome to Your Dashboard</h2>
+  <!-- Main -->
+  <main class="dashboard-main">
 
-  <div id="userInfo">
-    <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
-    <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
-  </div>
+    <!-- DASHBOARD CONTENT (Default View) -->
+    <div id="dashboard-content">
+      <section class="dashboard-header">
+        <h1>Welcome to your Dashboard</h1>
+        <p>Track purchases and update your profile.</p>
+      </section>
 
-  <div class="bio-section">
-    <h3>Your Bio</h3>
-    <form id="bioForm">
-      <textarea name="bio" id="bioInput" placeholder="Write something about yourself..." rows="4" required></textarea>
-      <button type="submit" class="btn">Save Bio</button>
-    </form>
-    <p id="bioStatus"></p>
-  </div>
+      <div class="dashboard-cards">
+        <!-- Purchases -->
+        <div class="card" id="orders">
+          <h2>Purchased Items</h2>
+          <div id="purchasedItems">Loading…</div>
+        </div>
 
-  <div class="purchases-section">
-    <h3>Your Purchased Items</h3>
-    <div id="purchasedItems">Loading...</div>
-  </div>
+        <!-- Profile -->
+        <div class="card" id="profile">
+          <h2>Your Profile</h2>
+
+          <!-- Avatar -->
+          <div class="avatar-box">
+            <img id="avatar-img" src="./images/default-avatar.png" alt="Profile picture">
+            <input id="avatar-input" type="file" accept="image/*">
+            <button id="change-avatar-btn" type="button">Change photo</button>
+          </div>
+
+          <!-- Profile Display View -->
+          <div id="profile-display">
+            <div class="profile-row">
+              <strong>Bio:</strong> 
+              <span id="bio-display"></span> 
+              <button id="edit-bio-btn">Edit</button>
+            </div>
+            <div class="profile-row">
+              <strong>Goals:</strong> 
+              <span id="goals-display"></span> 
+              <button id="edit-goals-btn">Edit</button>
+            </div>
+            <div class="profile-row">
+              <strong>Fitness level:</strong> 
+              <span id="level-display"></span> 
+              <button id="edit-level-btn">Edit</button>
+            </div>
+          </div>
+
+          <!-- Profile Edit Form (Hidden by Default) -->
+          <form id="profileForm" style="display: none;">
+            <textarea id="bio-input" name="bio" rows="4" placeholder="Tell us about yourself…"></textarea>
+            <textarea id="goals-input" name="goals" rows="4" placeholder="Your fitness goals…"></textarea>
+            <input id="level-input" name="level" type="text" placeholder="Beginner / Intermediate / Advanced">
+            <button id="save-btn" class="btn" type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS CONTENT (Hidden by Default) -->
+    <div id="settings-content" style="display: none;">
+      <section class="dashboard-header">
+        <h1>Settings</h1>
+        <p>Manage your account settings below.</p>
+      </section>
+
+      <div class="dashboard-cards">
+        <!-- Change Email -->
+        <div class="card">
+          <h2>Change Email</h2>
+          <form id="change-email-form">
+            <input type="email" id="new-email" placeholder="New Email" required>
+            <button type="submit" class="btn">Update Email</button>
+          </form>
+        </div>
+
+        <!-- Change Password -->
+        <div class="card">
+          <h2>Change Password</h2>
+          <form id="change-password-form">
+            <input type="password" id="new-password" placeholder="New Password" required minlength="6">
+            <button type="submit" class="btn">Update Password</button>
+          </form>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="card" style="background-color: #4d0b0b;">
+          <h2>Danger Zone</h2>
+          <p>Delete your account permanently.</p>
+          <button id="delete-account-btn" class="btn" style="background-color: #c70000;">Delete My Account</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
 </div>
 
-<!-- Footer -->
-<footer>
-  <p>© 2025 FitFusion. All rights reserved.</p>
-</footer>
-
-<!-- Supabase + JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.12.0/dist/umd/supabase.min.js"></script>
+<!-- Dashboard JS (Handles Switching Views and Logic) -->
 <script type="module" src="./js/dashboard.js"></script>
-
 </body>
 </html>

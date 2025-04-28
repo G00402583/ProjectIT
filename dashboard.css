@@ -1,0 +1,282 @@
+/* Dashboard Layout */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #000000, #6e45e2, #88d3ce);
+  color: #fff;
+}
+
+/* Layout Grid */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #111;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.sidebar-header img {
+  height: 40px;
+}
+
+.sidebar-nav a {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+  background: #6e45e2;
+  color: white;
+}
+
+/* Main content */
+.dashboard-main {
+  flex: 1;
+  padding: 34px 40px 60px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-header h1 {
+  margin-top: 0;
+  font-size: 2.2rem;
+}
+
+.dashboard-header p {
+  color: #ccc;
+  margin: 8px 0 30px;
+}
+
+/* Cards Section */
+.dashboard-cards {
+  display: flex;
+  gap: 34px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #222;
+  padding: 30px;
+  border-radius: 16px;
+  flex: 1 1 420px;
+  min-height: 320px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Profile Picture (UPDATED) */
+.profile-picture,
+.avatar-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 12px;
+}
+
+.profile-picture img,
+#avatar-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #6e45e2;
+  background: #111;
+  box-shadow: 0 0 12px rgba(110, 69, 226, 0.6);
+  transition: all 0.3s ease;
+}
+
+.profile-picture img:hover,
+#avatar-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 16px rgba(110, 69, 226, 0.8);
+}
+
+.profile-picture input,
+#avatar-input {
+  display: none;
+}
+
+.profile-picture label,
+#change-avatar-btn {
+  background: #6e45e2;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.profile-picture label:hover,
+#change-avatar-btn:hover {
+  background: #5934c4;
+  transform: translateY(-2px);
+}
+
+/* Profile Display */
+#profile-display {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+
+.profile-section,
+.profile-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #333;
+  padding: 18px;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.profile-section:hover,
+.profile-row:hover {
+  background: #444;
+}
+
+.profile-section h3,
+.profile-row strong {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.profile-section span,
+.profile-row span {
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.profile-section button,
+.profile-row button {
+  background: #6e45e2;
+  color: white;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-top: 6px;
+}
+
+.profile-section button:hover,
+.profile-row button:hover {
+  background: #5934c4;
+  transform: translateY(-2px);
+}
+
+/* Profile Edit Form */
+#profile-edit-form {
+  display: none;
+  padding: 20px;
+}
+
+#profileForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#profileForm input,
+#profileForm textarea {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background-color: #333;
+  color: white;
+  resize: vertical;
+}
+
+#profileForm .btn {
+  align-self: center;
+  background: #6e45e2;
+  color: white;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#profileForm .btn:hover {
+  background: #5934c4;
+  transform: translateY(-2px);
+}
+
+/* Purchased Items */
+#purchasedItems {
+  color: #ddd;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.purchased-item {
+  background: #2c2c2c;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: background 0.25s;
+}
+
+.purchased-item:hover {
+  background: #383838;
+}
+
+/* Footer (hidden) */
+.dashboard-footer {
+  display: none;
+}
+
+/* Input focus styling */
+input:focus,
+textarea:focus {
+  border: 2px solid #6e45e2;
+  background-color: #444;
+  outline: none;
+}
