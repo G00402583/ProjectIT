@@ -1,4 +1,4 @@
-// js/cartHelpers.js – add or increment item in cart_items
+//  add or increment item in cart_items
 
 import { sb } from './supaClient.js';
 
@@ -35,7 +35,7 @@ export async function addItem(userId, productId) {
     if (errInsert) throw new Error("Could not add item to cart");
   }
 
-  // 4) Return total value for feedback (optional)
+  // 4) Return total value for feedback 
   const { data: items, error: errTotal } = await sb
     .from("cart_items")
     .select("qty, product_id")

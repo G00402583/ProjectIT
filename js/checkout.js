@@ -1,5 +1,5 @@
-// ✅ This is the new code written
-// Description: Collects user and card details, hashes them, stores order + items in Supabase, and redirects to thankyou.html
+
+// Collects user and card details, hashes them, stores order + items in Supabase, and redirects to thankyou.html
 
 import { sb } from './supaClient.js';
 

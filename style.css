@@ -593,7 +593,7 @@ footer p {
   right: -10px;
   bottom: -10px;
   border-radius: 50px;
-  /* Subtle radial glow that matches your color scheme: 
+  /* Subtle radial glow that matches color scheme: 
      var(--ff-purple) -> var(--ff-blue) with some alpha for fade */
   background: radial-gradient(
     circle, 
@@ -754,7 +754,7 @@ footer p {
   display:inline-block;
 }
 .auth-topbar .auth-logo img{
-  height:48px;         /* clean & consistent */
+  height:48px;         
   width:auto;
 }
 
@@ -915,4 +915,6 @@ tfoot td {
 .place-order-btn:hover {
   background: linear-gradient(to right, #2575fc, #6a11cb);
 }
+
+*/
 

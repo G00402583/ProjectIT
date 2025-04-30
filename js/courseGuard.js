@@ -1,4 +1,4 @@
-// js/courseGuard.js – gate “Enroll Now” buttons & handle Log‑out
+//gate “Enroll Now” buttons & handle Log‑out
 // must be loaded via: <script type="module" src="js/courseGuard.js"></script>
 
 import { sb } from "./supaClient.js";   // shared client
@@ -16,7 +16,7 @@ logoutLink?.addEventListener("click", async (e) => {
   window.location.replace("login.html");
 });
 
-// ─── Helper: add (or +1) the course in your cart ─────────
+// ─── Helper: add (or +1) the course in cart ─────────
 async function addCourseToCart(courseId) {
   const { data:{ session } } = await sb.auth.getSession();
   const uid = session.user.id;
@@ -24,7 +24,7 @@ async function addCourseToCart(courseId) {
   // ensure a cart row exists
   await sb.from("carts").upsert({ user_id: uid });
 
-  // call your Postgres helper to insert or increment
+  // calls Postgres helper to insert or increment
   await sb.rpc("increment_item_qty", {
     p_cart:    uid,
     p_product: courseId

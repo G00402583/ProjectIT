@@ -1,4 +1,4 @@
-// js/navbar.js – Dynamically injects navigation bar (except on login/signup pages)
+// – Dynamically injects navigation bar (except on login/signup pages)
 import { sb } from './supaClient.js';
 
 const path = window.location.pathname;

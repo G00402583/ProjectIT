@@ -1,4 +1,4 @@
-/* contact-demo.js – front-end-only “fake send” */
+/* contact-demo.js – front-end-only “fake send for class purpose will use resend.com” */
 
 const form    = document.getElementById('contactForm');
 const sendBtn = document.getElementById('sendBtn');
@@ -7,7 +7,7 @@ const status  = document.getElementById('formStatus');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // simple UX feedback
+  //  UX feedback
   sendBtn.disabled = true;
   status.textContent = 'Sending…';
   status.style.color = '#fff';

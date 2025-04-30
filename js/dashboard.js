@@ -1,5 +1,6 @@
-// ✅ This is the new code written
-// Description: Full dashboard logic with Dashboard/Orders/Settings view switching, Purchased Items fetching, Avatar upload, Profile editing, Settings updates, Soft Delete account, and Deleted Users Auto-Logout with Warning.
+
+//Full dashboard logic with Dashboard/Orders/Settings view switching, Purchased Items fetching, Avatar upload, Profile editing,
+//  Settings updates, Soft Delete account, and Deleted Users Auto-Logout with Warning.
 
 import { sb } from './supaClient.js';
 
@@ -57,7 +58,7 @@ let userId = null;
 
   userId = session.user.id;
 
-  // ⚡ Check if the user is soft-deleted
+  //  Check if the user is soft-deleted
   const { data: profile, error: profileError } = await sb
     .from('profiles')
     .select('deleted_at')
@@ -294,6 +295,8 @@ async function loadOrders() {
   const productMap = {};
   products.forEach(p => productMap[p.id] = p);
 
+
+  // no actual links connected but can connect links where users will receieve a pdf which is stored in supabase
   const productDownloads = {
     "Energy-Exertion eBook": "https://website.com/downloads/energy-exertion-ebook.pdf",
     "Beginner Fitness Course": "https://website.com/downloads/beginner-fitness-course.zip",

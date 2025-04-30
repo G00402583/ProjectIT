@@ -1,4 +1,4 @@
-/* js/login.js – sign‑in + redirect ****************************/
+/* sign‑in + redirect /
 
 /* ───── Supabase initialise ───── */
 
@@ -40,7 +40,7 @@ forgotPasswordLink.addEventListener('click', async (e) => {
   }
 
   const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: 'http://127.0.0.1:5500/reset-password.html' // or your real site URL
+    redirectTo: 'https://fitfusion.netlify.app/reset-password.html' 
   });
 
   if (error) {

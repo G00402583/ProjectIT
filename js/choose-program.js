@@ -1,26 +1,3 @@
-/******************************************************************
-  This is the new code written
-  ---------------------------------------------------------------
-  Description
-  ===========
-  • Complete choose-program.js for the 9-step FitFusion wizard.  
-    – Works with the HTML you already have (section IDs step1-9,
-      Next / Back buttons, and card selections).  
-  • Saves every selection to the **program_choices** table in
-    Supabase, including **user_id** if the visitor is logged in.  
-  • Looks up the visitor’s first name from the `profiles` table
-    (falls back to full_name → email prefix → “friend”).  
-  • Generates a personalised recommendation:  
-      – Goal-based program name + product links.  
-      – Natural-language grammar (“an outdoor setting”, “an advanced
-        athlete”, “no injuries”, etc.).  
-      – Uses **the time the user actually chose** (“your planned
-        30-minute sessions”, “your 1-hour routine”, “your 2-hour
-        daily block”) instead of repeating “we recommend…”.  
-      – Adds a micro-tip matched to that time choice.  
-  • Everything wrapped in an async IIFE so you don’t need
-    `type="module"` in the HTML.
-******************************************************************/
 
 /* ==============================================================
    1. Supabase client
@@ -37,7 +14,7 @@
    (async () => {
    
      /* ---------- 2.1  Identify the visitor ---------------------- */
-     let firstName = 'friend';
+     let firstName = '👨‍💻';
      let userId    = null;
    
      try {
@@ -56,7 +33,7 @@
            session.user.user_metadata?.full_name?.split(' ')[0] ||
            session.user.email.split('@')[0];
        }
-     } catch {/* ignore errors, keep "friend" */ }
+     } catch {/* ignore errors, keep "👨‍💻" */ }
    
      /* ---------- 2.2  Cache DOM elements ------------------------ */
      const steps    = Array.from({ length: 9 }, (_, i) => document.getElementById(`step${i + 1}`));
@@ -99,7 +76,7 @@
      nextBtns.forEach(btn => btn.addEventListener('click', async () => {
        if (currentIndex < steps.length - 1) showStep(currentIndex + 1);
    
-       /* We’ve just displayed Step-9 → build & save */
+       /* Step-9 → build & save */
        if (currentIndex === steps.length - 1) {
          recBox.innerHTML = buildRecommendation();
          await saveToSupabase();
@@ -217,8 +194,8 @@
        if (error) console.error('Supabase insert failed:', error.message);
      }
    
-     /* ---------- 2.8  Kick off wizard --------------------------- */
+    
      showStep(0);
    
-   })();   /* end IIFE */
+   })();   
    

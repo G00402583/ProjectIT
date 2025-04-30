@@ -1,4 +1,3 @@
-// js/shopGuard.js
 import { sb }       from "./supaClient.js";
 import { addItem }  from "./cartHelpers.js";
 
@@ -35,7 +34,7 @@ document.querySelectorAll(".btn-add-cart").forEach(btn => {
       console.error("Failed to add to cart:", err.message);
     }
 
-    // go see your cart
+    // go see cart
     window.location.replace("cart.html");
   });
 });

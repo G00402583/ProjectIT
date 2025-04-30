@@ -1,6 +1,6 @@
-/* js/signup.js – instant sign‑up, profile row, smart redirect  */
+/*  instant sign‑up, profile row, smart redirect  */
 
-import { sb } from "./supaClient.js";     // 👈 only import, no new client
+import { sb } from "./supaClient.js";     //  only import, no new client
 
 /* where should we go afterwards?  /signup.html?next=cart.html  */
 const nextURL = new URLSearchParams(location.search).get("next") || "shop.html";

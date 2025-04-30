@@ -1,4 +1,4 @@
-// js/cart.js – fetch & render cart, support inline quantity updates and redirect to custom checkout
+//  fetch & render cart, support inline quantity updates and redirect to custom checkout
 import { sb } from './supaClient.js';
 
 const cartBody    = document.getElementById('cartBody');
@@ -90,7 +90,7 @@ logoutLink.addEventListener('click', async e => {
   window.location.replace('login.html');
 });
 
-// ✅ Redirect to your internal checkout page
+// ✅ Redirect to internal checkout page
 checkoutBtn.addEventListener('click', async e => {
   e.preventDefault();
   const { data: { session } } = await sb.auth.getSession();
