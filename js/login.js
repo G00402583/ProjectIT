@@ -40,7 +40,7 @@ forgotPasswordLink.addEventListener('click', async (e) => {
   }
 
   const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://fitfusion.netlify.app/reset-password.html' 
+    redirectTo: 'https://fitfusionirl.com/reset-password.html' 
   });
 
   if (error) {
