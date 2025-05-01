@@ -1,8 +1,8 @@
 /* =========================================================
-   FitFusion PWA — Service Worker (v9)
+   FitFusion PWA — Service Worker (v10)
    ========================================================= */
 
-   const CACHE_NAME = 'fitfusion-v9';
+   const CACHE_NAME = 'fitfusion-v10';
 
    /* “app-shell” files – cached at install */
    const APP_SHELL = [
