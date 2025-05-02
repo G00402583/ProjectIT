@@ -101,7 +101,7 @@ body {
   color: #fff;
 }
 
-/* Profile Picture (UPDATED) */
+/* Profile Picture */
 .profile-picture,
 .avatar-box {
   display: flex;
@@ -268,7 +268,7 @@ body {
   background: #383838;
 }
 
-/* Footer (hidden) */
+/* Footer */
 .dashboard-footer {
   display: none;
 }

@@ -26,7 +26,7 @@ document.querySelectorAll(".btn-add-cart").forEach(btn => {
 
     // logged‑in: actually add
     const userId     = session.user.id;
-    const productId  = btn.dataset.product;       // `data-product="…"`
+    const productId  = btn.dataset.product;       // data-product
     try {
       const totalCents = await addItem(userId, productId);
       console.log("🛒 new total:", (totalCents/100).toFixed(2));

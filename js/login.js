@@ -7,7 +7,7 @@ import { sb } from "./supaClient.js";
 const params   = new URLSearchParams(window.location.search);
 const NEXT_URL = params.get("next") || "shop.html";
 
-/* ───── already logged‑in?  ➜ NEXT_URL ───── */
+/* ───── already logged‑in?   NEXT_URL ───── */
 sb.auth.getSession().then(({ data:{ session } })=>{
   if (session) window.location.replace(NEXT_URL);
 });

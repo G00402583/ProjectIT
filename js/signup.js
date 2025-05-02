@@ -21,13 +21,13 @@ document.getElementById("signupForm").addEventListener("submit", async (e)=>{
   if (!email || !password || !password2)  return alert("Fill out every field.");
   if (password !== password2)             return alert("Passwords do not match.");
 
-  /* 1️⃣ create Auth user (session issued instantly) */
+  /* 1️ create Auth user (session issued instantly) */
   const { data, error } = await sb.auth.signUp({ email, password });
   if (error) return alert(error.message);
 
-  /* 2️⃣ optional profile row */
+  /* 2️ profile row */
   await sb.from("profiles").insert({ id:data.user.id, email });
 
-  /* 3️⃣ go to the intended page (cart or shop) */
+  /* 3️ go to the intended page (cart or shop) */
   window.location.replace(nextURL);
 });

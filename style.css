@@ -1,6 +1,6 @@
 /* =============================
-   FitFusion Final Styles
-   "Header" + Rest of Site
+   FitFusion Styles
+   
    ============================= */
 
 /* --- RESET & FONT --- */
@@ -55,11 +55,11 @@ body {
   margin-right: 2rem; 
 }
 .brand-link img {
-  height: 60px; /* Adjust as desired */
+  height: 60px; 
   width: auto;
 }
 
-/* Nav container: "button-like" items */
+/* Nav container button-like */
 .header-nav {
   display: flex;
   gap: 0.5rem; /* space between each button */
@@ -447,7 +447,7 @@ footer p {
 /* Center the entire wizard container and its content */
 .wizard-container {
   max-width: 1100px;       
-  margin:2rem /*top*/ auto 2rem calc(50% - 480px); /* centred but 480 px to left */     
+  margin:2rem /*top*/ auto 2rem calc(50% - 480px);     
   text-align: center;     
   background: rgba(0, 0, 0, 0.4);
   border-radius: 8px;
@@ -483,7 +483,7 @@ footer p {
 /* Override for STEP 1 (force 4 columns so 50+ doesn't wrap) */
 #step1 .card-grid {
   display: grid;
-  grid-template-columns: repeat(4, 220px); /* 4 fixed columns, each 220px */
+  grid-template-columns: repeat(4, 220px); 
   gap: 1rem;
   justify-content: center;
   margin: 2rem auto;
@@ -865,56 +865,3 @@ tfoot td {
   margin: 8px 0;
   color: #333;
 }
-
-/*checkout 
-
-.checkout-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 30px;
-  max-width: 700px;
-  margin: 40px auto;
-}
-
-.checkout-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.checkout-section-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.checkout-form input {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #f9f9f9;
-  font-size: 1rem;
-}
-
-.place-order-btn {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  width: 100%;
-  transition: background 0.3s;
-}
-
-.place-order-btn:hover {
-  background: linear-gradient(to right, #2575fc, #6a11cb);
-}
-
-*/
-

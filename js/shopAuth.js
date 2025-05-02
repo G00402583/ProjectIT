@@ -6,7 +6,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const logoutLink = document.getElementById("logoutLink");
 
-/* 1️⃣  show / hide the link on page load */
+/* 1️  show / hide the link on page load */
 sb.auth.getSession().then(({ data:{ session } })=>{
   if (session) {
     logoutLink.style.display = "inline-block";
@@ -16,7 +16,7 @@ sb.auth.getSession().then(({ data:{ session } })=>{
   }
 });
 
-/* 2️⃣  sign–out handler  */
+/* 2️  sign–out handler  */
 logoutLink.addEventListener("click", async ()=>{
   await sb.auth.signOut();             // removes the token
   window.location.replace("login.html");

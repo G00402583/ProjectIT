@@ -90,7 +90,7 @@ logoutLink.addEventListener('click', async e => {
   window.location.replace('login.html');
 });
 
-// ✅ Redirect to internal checkout page
+//  Redirect to internal checkout page
 checkoutBtn.addEventListener('click', async e => {
   e.preventDefault();
   const { data: { session } } = await sb.auth.getSession();
