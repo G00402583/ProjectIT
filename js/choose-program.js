@@ -2,8 +2,8 @@
 /* ==============================================================
    1. Supabase client
    ==============================================================*/
-   const SUPABASE_URL      = 'https://kqzevnsdurpptiaxszqq.supabase.co';
-   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxemV2bnNkdXJwcHRpYXhzenFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjA4NDYsImV4cCI6MjA1OTU5Njg0Nn0.eM-M08VulR5HiwKs-t7y2xehqUwBJPW0dnKENxMvArg';
+   const SUPABASE_URL      = '#';
+   const SUPABASE_ANON_KEY = '#';
    const TABLE_NAME        = 'program_choices';
    
    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
